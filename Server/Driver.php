@@ -199,7 +199,7 @@ class Net_Server_Driver extends PEAR {
             $buf = socket_read($this->clientFD[$clientId], $this->readBufferSize);
             $data .= $buf;
 
-            if ((string)$buf === null) {
+            if (trim($buf) === '') {
                 break;
             }
             
