@@ -29,6 +29,11 @@
  */
 
 /**
+ * uses PEAR's error handling and the destructors
+ */
+require_once 'PEAR.php';
+
+/**
  * driver file does not exist
  */
 define('NET_SERVER_ERROR_UNKNOWN_DRIVER', 51);
