@@ -40,7 +40,7 @@ class Net_Server_Handler {
     * @access public
     * @param  object    Net_Server_* object
     */
-    function    setServerReference( &$server )
+    function setServerReference( &$server )
     {
         $this->_server  =   &$server;
     }
@@ -55,7 +55,7 @@ class Net_Server_Handler {
     *
     * @access public
     */
-    function    onStart()
+    function onStart()
     {
     }
 
@@ -68,7 +68,7 @@ class Net_Server_Handler {
     *
     * @access public
     */
-    function    onShutdown()
+    function onShutdown()
     {
     }
 
@@ -83,7 +83,7 @@ class Net_Server_Handler {
     * @access public
     * @param  integer   $clientId   unique id of the client, in Net_Server_Fork, this is always 0
     */
-    function    onConnect($clientId = 0)
+    function onConnect($clientId = 0)
     {
     }
 
@@ -97,7 +97,7 @@ class Net_Server_Handler {
     * @access public
     * @param  integer   $clientId   unique id of the client
     */
-    function    onConnectionRefused($clientId = 0)
+    function onConnectionRefused($clientId = 0)
     {
     }
 
@@ -112,7 +112,7 @@ class Net_Server_Handler {
     * @access public
     * @param  integer   $clientId   unique id of the client, in Net_Server_Fork, this is always 0
     */
-    function    onClose($clientId = 0)
+    function onClose($clientId = 0)
     {
     }
 
@@ -128,7 +128,7 @@ class Net_Server_Handler {
     * @param  integer   $clientId   unique id of the client, in Net_Server_Fork, this is always 0
     * @param  string    $data       data that the client sent
     */
-    function    onReceiveData($clientId = 0, $data = "")
+    function onReceiveData($clientId = 0, $data = "")
     {
     }
 }

@@ -54,7 +54,7 @@
     * @access   public
     * @param    int    $maxClients
     */
-    function    setMaxClients($maxClients)
+    function setMaxClients($maxClients)
     {
         $this->maxClients = $maxClients;
     }
@@ -64,7 +64,7 @@
     *
     * @access   public
     */
-    function    start()
+    function start()
     {
         $this->initFD    =    @socket_create(AF_INET, SOCK_STREAM, 0);
         if (!$this->initFD) {
@@ -171,7 +171,7 @@
     * @param    resource    &$socket    socket that received the new connection
     * @return   int         $clientID   internal ID of the client
     */
-    function    acceptConnection(&$socket) {
+    function acceptConnection(&$socket) {
         for($i = 0 ; $i <= count($this->clientFD); $i++) {
             if (!isset($this->clientFD[$i]) || $this->clientFD[$i] == NULL) {
                 $this->clientFD[$i]    =    socket_accept($socket);
@@ -203,7 +203,7 @@
     * @param    integer    $id         client id
     * @return   boolean    $connected  true if client is connected, false otherwise
     */
-    function    isConnected($id) {
+    function isConnected($id) {
         if (!isset($this->clientFD[$id])) {
             return false;
         }
@@ -216,7 +216,7 @@
     * @access   public
     * @return int    $clients    amount of clients
     */
-    function    getClients() {
+    function getClients() {
         return $this->clients;
     }
 
@@ -228,7 +228,7 @@
     * @param    string    $data        data to send
     * @param    boolean    $debugData    flag to indicate whether data that is written to socket should also be sent as debug message
     */
-    function    sendData($clientId, $data, $debugData = true) {
+    function sendData($clientId, $data, $debugData = true) {
         if (!isset($this->clientFD[$clientId]) || $this->clientFD[$clientId] == NULL) {
             return $this->raiseError("Client does not exist.");
         }
@@ -248,7 +248,7 @@
     * @param    string    $data        data to send
     * @param    array    $exclude    client ids to exclude
     */
-    function    broadcastData($data, $exclude = array()) {
+    function broadcastData($data, $exclude = array()) {
         if (!empty($exclude) && !is_array($exclude)) {
             $exclude    =    array($exclude);
         }
@@ -269,7 +269,7 @@
     * @param    int        $clientId    ID of the client
     * @return array    $info        information about the client
     */
-    function    getClientInfo($clientId) {
+    function getClientInfo($clientId) {
         if (!isset($this->clientFD[$clientId]) || $this->clientFD[$clientId] == NULL) {
             return $this->raiseError("Client does not exist.");
         }
@@ -282,7 +282,7 @@
     * @access   public
     * @param    int    $clientID    internal ID of the client
     */
-    function    closeConnection($id = 0) {
+    function closeConnection($id = 0) {
         if (!isset($this->clientFD[$id])) {
             return $this->raiseError( "Connection already has been closed." );
         }
@@ -304,9 +304,9 @@
     *
     * @access   public
     */
-    function    shutDown() {
+    function shutDown() {
         if ($GLOBALS["_Net_Server_Status"] != "running") {
-            exit;
+            exit();
         }
         $GLOBALS["_Net_Server_Status"]    =    "stopped";
         
@@ -322,7 +322,7 @@
         @socket_close($this->initFD);
 
         $this->_sendDebugMessage("Shutdown server.");
-        exit;
+        exit();
     }
     
 }

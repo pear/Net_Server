@@ -31,6 +31,16 @@ define('NET_SERVER_ERROR_UNKNOWN_DRIVER', 51);
 define('NET_SERVER_ERROR_DRIVER_CORRUPT', 52);
 
 /**
+ * feature is not supported
+ */
+define('NET_SERVER_ERROR_NOT_SUPPORTED', 53);
+
+/**
+ * needs PCNTL extension
+ */
+define('NET_SERVER_ERROR_PCNTL_REQUIRED', 54);
+
+/**
  * PHP socket server base class
  *
  * This class must only be used to create a new server using
@@ -154,7 +164,7 @@ class Net_Server extends PEAR {
     * @param    string   $domain      domain to bind to
     * @param    integer  $port        port to listen to
     */
-    function    Net_Server($domain = "localhost", $port = 10000)
+    function Net_Server($domain = "localhost", $port = 10000)
     {
         $this->PEAR();
         
@@ -170,7 +180,7 @@ class Net_Server extends PEAR {
     *
     * @access   private
     */
-    function    _Net_Server()
+    function _Net_Server()
     {
         $this->shutdown();
     }
@@ -219,7 +229,7 @@ class Net_Server extends PEAR {
     * @param    mixed    $debug   [text|htmlfalse]
     * @param    string   $dest    destination of debug message (stdout to output or filename if log should be written)
     */
-    function    setDebugMode($debug, $dest = "stdout")
+    function setDebugMode($debug, $dest = "stdout")
     {
         if ($debug === false) {
             $this->_debug = false;
@@ -239,7 +249,7 @@ class Net_Server extends PEAR {
     * @param    integer   $clientId    internal id of the client to read from
     * @return   string    $data        data that was read
     */
-    function    readFromSocket($clientId = 0) {
+    function readFromSocket($clientId = 0) {
         //    start with empty string
         $data        =    "";
     
@@ -251,7 +261,7 @@ class Net_Server extends PEAR {
             if ($endString == $this->readEndCharacter) {
                 break;
             }
-            if ($buf == NULL) {
+            if ($buf == null) {
                 break;
             }
         }
@@ -269,7 +279,7 @@ class Net_Server extends PEAR {
     * @access private
     * @param  string    $msg    message to debug
     */
-    function    _sendDebugMessage($msg) {
+    function _sendDebugMessage($msg) {
         if (!$this->_debug) {
             return false;
         }
@@ -315,7 +325,7 @@ class Net_Server extends PEAR {
     * @access   public
     * @return string    $error    last error
     */
-    function    getLastSocketError(&$fd) {
+    function getLastSocketError(&$fd) {
         if(!is_resource($fd)) {
             return "";
         }

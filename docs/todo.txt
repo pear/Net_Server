@@ -1,0 +1,6 @@
+Net_Server todo list:
+---------------------
+$Id$
+
+- add error codes to all calls to raiseError
+- add driver based on pcntl and shm

@@ -52,9 +52,9 @@ class Net_Server_Fork extends Net_Server
     * @access   public
     * @param    int    $maxClients
     */
-    function    setMaxClients($maxClients)
+    function setMaxClients($maxClients)
     {
-        return  $this->raiseError('Not implemented');
+        return  $this->raiseError('Not supported.', NET_SERVER_ERROR_NOT_SUPPORTED);
     }
 
    /**
@@ -62,10 +62,10 @@ class Net_Server_Fork extends Net_Server
     *
     * @access   public
     */
-    function    start()
+    function start()
     {
         if (!function_exists('pcntl_fork')) {
-            return $this->raiseError('Needs pcntl extension to fork processes.');
+            return $this->raiseError('Needs pcntl extension to fork processes.', NET_SERVER_ERROR_PCNTL_REQUIRED);
         }
     
         $this->initFD    =    @socket_create(AF_INET, SOCK_STREAM, 0);
@@ -155,7 +155,7 @@ class Net_Server_Fork extends Net_Server
             $readFDs = array( $this->clientFD[0] );
     
             //    block and wait for data
-            $ready    =    @socket_select($readFDs, $this->null, $this->null, NULL);
+            $ready    =    @socket_select($readFDs, $this->null, $this->null, null);
     
             if ($ready === false)
             {
@@ -192,7 +192,7 @@ class Net_Server_Fork extends Net_Server
     * @param    integer    $id         client id
     * @return   boolean    $connected  true if client is connected, false otherwise
     */
-    function    isConnected() {
+    function isConnected() {
         if (is_resource($this->clientFD[0])) {
             return true;
         }
@@ -206,7 +206,7 @@ class Net_Server_Fork extends Net_Server
     * @access   public
     * @return PEAR_Error
     */
-    function    getClients() {
+    function getClients() {
         return $this->raiseError('Not implemented');
     }
 
@@ -217,13 +217,13 @@ class Net_Server_Fork extends Net_Server
     * @param    string    $data        data to send
     * @param    boolean    $debugData    flag to indicate whether data that is written to socket should also be sent as debug message
     */
-    function    sendData($data, $debugData = true) {
+    function sendData($data, $debugData = true) {
         // keep it compatible to Net_Server_Sequential
         if (is_string($debugData)) {
             $data = $debugData;
         }
     
-        if (!isset($this->clientFD[0]) || $this->clientFD[0] == NULL) {
+        if (!isset($this->clientFD[0]) || $this->clientFD[0] == null) {
             return $this->raiseError("Client does not exist.");
         }
 
@@ -242,7 +242,7 @@ class Net_Server_Fork extends Net_Server
     * @param    string    $data        data to send
     * @param    array    $exclude    client ids to exclude
     */
-    function    broadcastData($data, $exclude = array()) {
+    function broadcastData($data, $exclude = array()) {
         $this->sendData($data);
     }
 
@@ -252,8 +252,8 @@ class Net_Server_Fork extends Net_Server
     * @access   public
     * @return array    $info        information about the client
     */
-    function    getClientInfo() {
-        if (!isset($this->clientFD[0]) || $this->clientFD[0] == NULL) {
+    function getClientInfo() {
+        if (!isset($this->clientFD[0]) || $this->clientFD[0] == null) {
             return $this->raiseError("Client does not exist.");
         }
         return $this->clientInfo[$clientId];
@@ -264,7 +264,7 @@ class Net_Server_Fork extends Net_Server
     *
     * @access   public
     */
-    function    closeConnection() {
+    function closeConnection() {
         if (!isset($this->clientFD[0])) {
             return $this->raiseError( "Connection already has been closed." );
         }
@@ -276,9 +276,9 @@ class Net_Server_Fork extends Net_Server
         $this->_sendDebugMessage("Closed connection from ".$this->clientInfo[0]["host"]." on port ".$this->clientInfo[0]["port"]);
 
         @socket_close($this->clientFD[0]);
-        $this->clientFD[0]    =    NULL;
+        $this->clientFD[0]    =    null;
         unset($this->clientInfo[0]);
-		exit;
+        exit();
     }
 
    /**
@@ -286,11 +286,9 @@ class Net_Server_Fork extends Net_Server
     *
     * @access   public
     */
-    function    shutDown() {
+    function shutDown() {
         $this->closeConnection();
         exit;
     }
-    
-
 }
 ?>
