@@ -101,7 +101,7 @@ class Net_Server {
     function &create($type, $host, $port)
     {
         if (!function_exists('socket_create')) {
-            return $this->raiseError('Sockets extension not available.');
+            return PEAR::raiseError('Sockets extension not available.');
         }
 
         $type       =   ucfirst(strtolower($type));
