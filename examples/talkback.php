@@ -1,9 +1,23 @@
 #!/usr/local/bin/php
 <?PHP
-    // server base class
+/**
+ * simple example that implements a talkback.
+ *
+ * Normally this should be a bit more code and in a separate file
+ *
+ * @category    Networking
+ * @package     Net_Server
+ * @subpackage  Examples
+ * @author      Stephan Schmidt <schst@php.net>
+ */
+    /**
+     * server base class
+     */
 	require_once 'Net/Server.php';
     
-    // base class for the hanlder
+    /**
+    * base class for the handler
+    */
 	require_once 'Net/Server/Handler.php';
 
 /**
@@ -11,8 +25,10 @@
  *
  * Normally this should be a bit more code and in a separate file
  *
- * @version 0.1
- * @author  Stephan Schmidt <schst@php.net>
+ * @category    Networking
+ * @package     Net_Server
+ * @subpackage  Examples
+ * @author      Stephan Schmidt <schst@php.net>
  */
 class Net_Server_Handler_Talkback extends Net_Server_Handler
 {

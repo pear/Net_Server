@@ -18,7 +18,15 @@
 //
 //    $Id$
 
-require_once 'PEAR.php';
+/**
+ * PHP socket server base class
+ *
+ * @category    Networking
+ * @package     Net_Server
+ * @version     0.11 alpha
+ * @author      Stephan Schmidt <schst@php.net>
+ * @license     PHP License
+ */
 
 /**
  * driver file does not exist
@@ -65,6 +73,8 @@ define('NET_SERVER_ERROR_PCNTL_REQUIRED', 54);
  * See Server/Handler.php for a baseclass that you can
  * use to implement new handlers.
  *
+ * @category    Networking
+ * @package     Net_Server
  * @version 0.11 alpha
  * @author  Stephan Schmidt <schst@php.net>
  */
@@ -91,7 +101,7 @@ class Net_Server {
 
         $type       =   ucfirst(strtolower($type));
         $driverFile =   'Net/Server/Driver/' . $type . '.php';
-        $className  =   'Net_Server_' . $type;
+        $className  =   'Net_Server_Driver_' . $type;
         
         if (!@include_once $driverFile) {
             return PEAR::raiseError('Unknown server type', NET_SERVER_ERROR_UNKNOWN_DRIVER);

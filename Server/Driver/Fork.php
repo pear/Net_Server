@@ -19,6 +19,14 @@
 //    $Id$
 
 /**
+ * Forking server class.
+ *
+ * @category    Networking
+ * @package     Net_Server
+ * @author      Stephan Schmidt <schst@php.net>
+ */
+
+/**
  * needs the driver base class
  */
 require_once 'Net/Server/Driver.php';
@@ -36,9 +44,11 @@ require_once 'Net/Server/Driver.php';
  *   - onClose
  *   - onReceiveData
  *
- * @author  Stephan Schmidt <schst@php.net>
+ * @category    Networking
+ * @package     Net_Server
+ * @author      Stephan Schmidt <schst@php.net>
  */
-class Net_Server_Fork extends Net_Server_Driver
+class Net_Server_Driver_Fork extends Net_Server_Driver
 {
    /**
     * flag to indicate whether this is the parent

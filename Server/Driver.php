@@ -21,7 +21,17 @@
 /**
  * Base class for all drivers
  *
- * @author  Stephan Schmidt <schst@php.net>
+ * @category    Networking
+ * @package     Net_Server
+ * @author      Stephan Schmidt <schst@php.net>
+ */
+
+/**
+ * Base class for all drivers
+ *
+ * @category    Networking
+ * @package     Net_Server
+ * @author      Stephan Schmidt <schst@php.net>
  */
 class Net_Server_Driver extends PEAR {
    /**

@@ -21,8 +21,17 @@
 /**
  * Base class for all handlers
  *
- * @version 0.10
- * @author  Stephan Schmidt <schst@php.net>
+ * @category    Networking
+ * @package     Net_Server
+ * @author      Stephan Schmidt <schst@php.net>
+ */
+
+/**
+ * Base class for all handlers
+ *
+ * @category    Networking
+ * @package     Net_Server
+ * @author      Stephan Schmidt <schst@php.net>
  */
 class Net_Server_Handler {
 

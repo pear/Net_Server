@@ -19,6 +19,14 @@
 //    $Id$
 
 /**
+ * Sequential server class.
+ *
+ * @category    Networking
+ * @package     Net_Server
+ * @author      Stephan Schmidt <schst@php.net>
+ */
+
+/**
  * needs the driver base class
  */
 require_once 'Net/Server/Driver.php';
@@ -42,9 +50,11 @@ require_once 'Net/Server/Driver.php';
  *   - onReceiveData
  *   - onShutdown
  *
- * @author  Stephan Schmidt <schst@php.net>
+ * @category    Networking
+ * @package     Net_Server
+ * @author      Stephan Schmidt <schst@php.net>
  */
- class Net_Server_Sequential extends Net_Server_Driver
+ class Net_Server_Driver_Sequential extends Net_Server_Driver
 {
    /**
     * amount of clients
