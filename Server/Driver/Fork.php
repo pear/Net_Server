@@ -141,7 +141,7 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
                     $this->_sendDebugMessage("New connection from ".$peer_host." on port ".$peer_port);
 
                     if (method_exists($this->callbackObj, "onConnect")) {
-                        $this->callbackObj->onConnect($i);
+                        $this->callbackObj->onConnect(0);
                     }
 
                     $this->serviceRequest();
@@ -189,7 +189,7 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
                 }
                 else
                 {
-                    $this->_sendDebugMessage("Received ".trim($data)." from ".$i);
+                    $this->_sendDebugMessage("Received ".trim($data)." from ".getmypid());
     
                     if (method_exists($this->callbackObj, "onReceiveData")) {
                         $this->callbackObj->onReceiveData(0, $data);
@@ -203,7 +203,6 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
     * check, whether a client is still connected
     *
     * @access   public
-    * @param    integer    $id         client id
     * @return   boolean    $connected  true if client is connected, false otherwise
     */
     function isConnected()
@@ -290,7 +289,7 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
         }
 
         if (method_exists($this->callbackObj, "onClose")) {
-            $this->callbackObj->onClose($id);
+            $this->callbackObj->onClose(0);
         }
 
         $this->_sendDebugMessage("Closed connection from ".$this->clientInfo[0]["host"]." on port ".$this->clientInfo[0]["port"]);
