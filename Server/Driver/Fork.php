@@ -19,6 +19,11 @@
 //    $Id$
 
 /**
+ * needs the driver base class
+ */
+require_once 'Net/Server/Driver.php';
+
+/**
  * Forking server class.
  *
  * This class will fork a new process for each connection.
@@ -34,7 +39,7 @@
  * @version 0.10 alpha
  * @author  Stephan Schmidt <schst@php.net>
  */
-class Net_Server_Fork extends Net_Server
+class Net_Server_Fork extends Net_Server_Driver
 {
    /**
     * flag to indicate whether this is the parent

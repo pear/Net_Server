@@ -19,6 +19,11 @@
 //    $Id$
 
 /**
+ * needs the driver base class
+ */
+require_once 'Net/Server/Driver.php';
+
+/**
  * Sequential server class.
  *
  * This class will handles all connection in one server process.
@@ -40,7 +45,7 @@
  * @version 0.10 alpha
  * @author  Stephan Schmidt <schst@php.net>
  */
- class Net_Server_Sequential extends Net_Server
+ class Net_Server_Sequential extends Net_Server_Driver
 {
    /**
     * amount of clients
@@ -324,6 +329,5 @@
         $this->_sendDebugMessage("Shutdown server.");
         exit();
     }
-    
 }
 ?>
