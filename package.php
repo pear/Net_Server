@@ -18,7 +18,7 @@ require_once 'PEAR/PackageFileManager.php';
 /**
  * current version
  */
-$version = '0.11.2';
+$version = '0.11.3';
 
 /**
  * current state
@@ -29,9 +29,7 @@ $state = 'alpha';
  * release notes
  */
 $notes = <<<EOT
-- fixed bug #1244 (check for required extensions),
-- fixed bug #1429 (fails on reading a 0 character),
-- fixed some coding style issues
+- fixed bug with autodetection of connection abort
 EOT;
 
 /**
