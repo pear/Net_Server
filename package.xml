@@ -19,11 +19,14 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>0.11.5</version>
-    <date>2004-07-25</date>
+    <version>0.12.0</version>
+    <date>2004-08-21</date>
     <license>PHP License</license>
     <state>alpha</state>
-    <notes>- fixed bug #1972 (script runs in endless loop)</notes>
+    <notes>- fixed Bug #2092 (typo in variable name)
+- fixed bug #2157 (socket_shutdown not called)
+- fixes bug #1945 (removed some variables that have been left over from Net_Server_Driver_Sequential)
+- fixed Request #1946 (improved debug output)</notes>
     <deps>
       <dep type="php" rel="ge" version="4.2.0" optional="no"/>
       <dep type="pkg" rel="has" optional="no">PEAR</dep>
@@ -117,6 +120,16 @@ Restructuring:
       <license>PHP License</license>
       <state>alpha</state>
       <notes>- fixed bug #1972 (script runs in endless loop)</notes>
+    </release>
+    <release>
+      <version>0.12.0</version>
+      <date>2004-08-21</date>
+      <license>PHP License</license>
+      <state>alpha</state>
+      <notes>- fixed Bug #2092 (typo in variable name)
+- fixed bug #2157 (socket_shutdown not called)
+- fixes bug #1945 (removed some variables that have been left over from Net_Server_Driver_Sequential)
+- fixed Request #1946 (improved debug output)</notes>
     </release>
   </changelog>
 </package>

@@ -18,7 +18,7 @@ require_once 'PEAR/PackageFileManager.php';
 /**
  * current version
  */
-$version = '0.11.5';
+$version = '0.12.0';
 
 /**
  * current state
@@ -29,7 +29,10 @@ $state = 'alpha';
  * release notes
  */
 $notes = <<<EOT
-- fixed bug #1972 (script runs in endless loop)
+- fixed Bug #2092 (typo in variable name)
+- fixed bug #2157 (socket_shutdown not called)
+- fixes bug #1945 (removed some variables that have been left over from Net_Server_Driver_Sequential)
+- fixed Request #1946 (improved debug output)
 EOT;
 
 /**
