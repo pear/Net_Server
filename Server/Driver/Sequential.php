@@ -320,11 +320,6 @@ require_once 'Net/Server/Driver.php';
     * @access   public
     */
     function shutDown() {
-        if ($GLOBALS["_Net_Server_Status"] != "running") {
-            exit();
-        }
-        $GLOBALS["_Net_Server_Status"]    =    "stopped";
-        
         if (method_exists($this->callbackObj, "onShutdown")) {
             $this->callbackObj->onShutdown();
         }
