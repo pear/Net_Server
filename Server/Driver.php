@@ -195,14 +195,10 @@ class Net_Server_Driver extends PEAR {
         $data = '';
     
         //    read data from socket
-        while(true) {
+        while (true) {
             $buf = socket_read($this->clientFD[$clientId], $this->readBufferSize);
             $data .= $buf;
 
-            if (trim($buf) === '') {
-                break;
-            }
-            
             if ($this->readEndCharacter != null) {
                 $endString    =    substr($buf, - strlen($this->readEndCharacter));
                 if ($endString == $this->readEndCharacter) {
@@ -212,7 +208,7 @@ class Net_Server_Driver extends PEAR {
                 /**
                  * readEndCharacter is set to null => autodetect
                  */
-                if( strlen( $buf ) < $this->readBufferSize ) {
+                if (strlen($buf) < $this->readBufferSize) {
                     break;
                 }
             }
