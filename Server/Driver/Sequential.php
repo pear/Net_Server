@@ -253,6 +253,7 @@ require_once 'Net/Server/Driver.php';
         if (!@socket_write($this->clientFD[$clientId], $data)) {
             $this->_sendDebugMessage("Could not write '".$data."' client ".$clientId." (".$this->getLastSocketError($this->clientFD[$clientId]).").");
         }
+        return true;
     }
 
    /**
