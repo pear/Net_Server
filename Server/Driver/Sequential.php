@@ -90,7 +90,7 @@ require_once 'Net/Server/Driver.php';
 
         //    bind the socket
         if (!@socket_bind($this->initFD, $this->domain, $this->port)) {
-            $error = $this->getLastSocketError($this->initFd);
+            $error = $this->getLastSocketError($this->initFD);
             @socket_close($this->initFD);
             return $this->raiseError("Could not bind socket to ".$this->domain." on port ".$this->port." (".$error.").");
         }
