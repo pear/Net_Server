@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<package version="1.0">
+  <name>Net_Server</name>
+  <summary>Generic server class.</summary>
+  <description>Generic server class based on ext/sockets, used to develop any kind of server.</description>
+  <maintainers>
+    <maintainer>
+      <user>schst</user>
+      <name>Stephan Schmidt</name>
+      <email>schst@php-tools.net</email>
+      <role>lead</role>
+    </maintainer>
+  </maintainers>
+  <release>
+    <version>0.9.1</version>
+    <date></date>
+    <license>PHP</license>
+    <state>beta</state>
+    <notes>
+        added bytes sent/recieved,
+        adjusted PHPDoc comments to PEAR CS,
+        adjusted _debug property
+    </notes>
+    <deps>
+      <dep type="php" rel="ge" version="4.2"/>
+    </deps>
+    <filelist>
+      <file role="php" baseinstalldir="Net" name="Server.php"/>
+    </filelist>
+  </release>
+  <changelog>
+    <release>
+        <version>0.9</version>
+        <date>2002-07-21</date>
+        <state>beta</state>
+        <notes>pearified version of patServer v1.0.1</notes>
+    </release>
+  </changelog>
+</package>
