@@ -46,7 +46,13 @@ class Net_Server_Handler_Talkback extends Net_Server_Handler
 }
     
     // create a server that forks new processes
-	$server	 = &Net_Server::create('fork', 'localhost', 9090);
+	$server	 = &Net_Server::create('sequential', 'localhost', 9090);
+
+    print_r($server);
+    
+    if (PEAR::isError($server)) {
+        echo $server->getMessage()."\n";
+    }
     
     $handler = &new Net_Server_Handler_Talkback;
     

@@ -112,8 +112,6 @@ class Net_Server {
             return PEAR::raiseError('Unknown server type', NET_SERVER_ERROR_UNKNOWN_DRIVER);
         }
         
-        include_once $driverFile;
-        
         if (!class_exists($className)) {
             return PEAR::raiseError('Driver file is corrupt.', NET_SERVER_ERROR_DRIVER_CORRUPT);
         }

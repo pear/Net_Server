@@ -27,6 +27,11 @@
  */
 
 /**
+ * uses PEAR's error handling and the destructors
+ */
+require_once 'PEAR.php';
+ 
+/**
  * Base class for all drivers
  *
  * This class provides methods, can be used by all
@@ -181,12 +186,13 @@ class Net_Server_Driver extends PEAR {
     * read from a socket
     *
     * @access   private
-    * @param    integer   $clientId    internal id of the client to read from
-    * @return   string    $data        data that was read
+    * @param    integer         $clientId    internal id of the client to read from
+    * @return   string|boolean  $data        data that was read
     */
-    function readFromSocket($clientId = 0) {
+    function readFromSocket($clientId = 0)
+    {
         //    start with empty string
-        $data        =    "";
+        $data = '';
     
         //    read data from socket
         while($buf = socket_read($this->clientFD[$clientId], $this->readBufferSize)) {
@@ -213,8 +219,11 @@ class Net_Server_Driver extends PEAR {
 
         if ($buf === false) {
             $this->_sendDebugMessage("Could not read from client ".$clientId." (".$this->getLastSocketError($this->clientFD[$clientId]).").");
+            return false;
         }
-
+        if ($data === '') {
+            return false;
+        }
         return $data;
     }
 
@@ -229,7 +238,8 @@ class Net_Server_Driver extends PEAR {
 	* @see    setDebugMode()
 	* @todo   remove underscore from method name as the method now is public.
     */
-    function _sendDebugMessage($msg) {
+    function _sendDebugMessage($msg)
+    {
         if (!$this->_debug) {
             return false;
         }
@@ -283,12 +293,13 @@ class Net_Server_Driver extends PEAR {
     * @access   public
     * @return string    $error    last error
     */
-    function getLastSocketError(&$fd) {
+    function getLastSocketError(&$fd)
+    {
         if(!is_resource($fd)) {
-            return "";
+            return '';
         }
         $lastError    =    socket_last_error($fd);
-        return "Msg: " . socket_strerror($lastError) . " / Code: ".$lastError;
+        return 'Msg: ' . socket_strerror($lastError) . ' / Code: '.$lastError;
     }
  }
 ?>

@@ -162,7 +162,7 @@ require_once 'Net/Server/Driver.php';
                     $data    =    $this->readFromSocket($i);
                     
                     //    empty data => connection was closed
-                    if (!$data) {
+                    if ($data === false) {
                         $this->_sendDebugMessage("Connection closed by peer");
                         $this->closeConnection($i);
                     }
@@ -185,7 +185,8 @@ require_once 'Net/Server/Driver.php';
     * @param    resource    &$socket    socket that received the new connection
     * @return   int         $clientID   internal ID of the client
     */
-    function acceptConnection(&$socket) {
+    function acceptConnection(&$socket)
+    {
         for($i = 0 ; $i <= count($this->clientFD); $i++) {
             if (!isset($this->clientFD[$i]) || $this->clientFD[$i] == NULL) {
                 $this->clientFD[$i]    =    socket_accept($socket);
@@ -217,7 +218,8 @@ require_once 'Net/Server/Driver.php';
     * @param    integer    $id         client id
     * @return   boolean    $connected  true if client is connected, false otherwise
     */
-    function isConnected($id) {
+    function isConnected($id)
+    {
         if (!isset($this->clientFD[$id])) {
             return false;
         }
@@ -230,7 +232,8 @@ require_once 'Net/Server/Driver.php';
     * @access   public
     * @return int    $clients    amount of clients
     */
-    function getClients() {
+    function getClients()
+    {
         return $this->clients;
     }
 
@@ -242,7 +245,8 @@ require_once 'Net/Server/Driver.php';
     * @param    string    $data        data to send
     * @param    boolean    $debugData    flag to indicate whether data that is written to socket should also be sent as debug message
     */
-    function sendData($clientId, $data, $debugData = true) {
+    function sendData($clientId, $data, $debugData = true)
+    {
         if (!isset($this->clientFD[$clientId]) || $this->clientFD[$clientId] == NULL) {
             return $this->raiseError("Client does not exist.");
         }
@@ -263,7 +267,8 @@ require_once 'Net/Server/Driver.php';
     * @param    string    $data        data to send
     * @param    array    $exclude    client ids to exclude
     */
-    function broadcastData($data, $exclude = array()) {
+    function broadcastData($data, $exclude = array())
+    {
         if (!empty($exclude) && !is_array($exclude)) {
             $exclude    =    array($exclude);
         }
@@ -284,7 +289,8 @@ require_once 'Net/Server/Driver.php';
     * @param    int        $clientId    ID of the client
     * @return array    $info        information about the client
     */
-    function getClientInfo($clientId) {
+    function getClientInfo($clientId)
+    {
         if (!isset($this->clientFD[$clientId]) || $this->clientFD[$clientId] == NULL) {
             return $this->raiseError("Client does not exist.");
         }
@@ -297,7 +303,8 @@ require_once 'Net/Server/Driver.php';
     * @access   public
     * @param    int    $clientID    internal ID of the client
     */
-    function closeConnection($id = 0) {
+    function closeConnection($id = 0)
+    {
         if (!isset($this->clientFD[$id])) {
             return $this->raiseError( "Connection already has been closed." );
         }
@@ -319,7 +326,8 @@ require_once 'Net/Server/Driver.php';
     *
     * @access   public
     */
-    function shutDown() {
+    function shutDown()
+    {
         if (method_exists($this->callbackObj, "onShutdown")) {
             $this->callbackObj->onShutdown();
         }
