@@ -18,7 +18,7 @@ require_once 'PEAR/PackageFileManager.php';
 /**
  * current version
  */
-$version = '0.11.4';
+$version = '0.11.5';
 
 /**
  * current state
@@ -29,9 +29,7 @@ $state = 'alpha';
  * release notes
  */
 $notes = <<<EOT
-- fixed bug #1890 (Server.php needs PEAR.php)
-- fixed notices in Fork.php
-- added missing dependencies
+- fixed bug #1972 (script runs in endless loop)
 EOT;
 
 /**

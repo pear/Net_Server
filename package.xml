@@ -19,13 +19,11 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>0.11.4</version>
-    <date>2004-07-17</date>
+    <version>0.11.5</version>
+    <date>2004-07-25</date>
     <license>PHP License</license>
     <state>alpha</state>
-    <notes>- fixed bug #1890 (Server.php needs PEAR.php)
-- fixed notices in Fork.php
-- added missing dependencies</notes>
+    <notes>- fixed bug #1972 (script runs in endless loop)</notes>
     <deps>
       <dep type="php" rel="ge" version="4.2.0" optional="no"/>
       <dep type="pkg" rel="has" optional="no">PEAR</dep>
@@ -36,20 +34,20 @@
       <dir baseinstalldir="Net" name="/">
        <dir name="docs">
         <file role="doc" name="todo.txt"/>
-       </dir>
+       </dir> <!-- docs -->
        <dir name="examples">
         <file role="doc" name="talkback.php"/>
-       </dir>
+       </dir> <!-- examples -->
        <dir name="Server">
         <file role="php" name="Driver.php"/>
         <file role="php" name="Handler.php"/>
         <dir name="Driver">
          <file role="php" name="Fork.php"/>
          <file role="php" name="Sequential.php"/>
-        </dir>
-       </dir>
+        </dir> <!-- Server/Driver -->
+       </dir> <!-- Server -->
        <file role="php" name="Server.php"/>
-      </dir>
+      </dir> <!-- / -->
     </filelist>
   </release>
   <changelog>
@@ -112,6 +110,13 @@ Restructuring:
       <notes>- fixed bug #1890 (Server.php needs PEAR.php)
 - fixed notices in Fork.php
 - added missing dependencies</notes>
+    </release>
+    <release>
+      <version>0.11.5</version>
+      <date>2004-07-25</date>
+      <license>PHP License</license>
+      <state>alpha</state>
+      <notes>- fixed bug #1972 (script runs in endless loop)</notes>
     </release>
   </changelog>
 </package>
