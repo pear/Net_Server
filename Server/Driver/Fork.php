@@ -245,10 +245,10 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
         }
 
         if ($debugData) {
-            $this->_sendDebugMessage("sending: \"" . $data . "\" to: $clientId" );
+            $this->_sendDebugMessage("sending: \"" . $data . "\" to: ".getmypid() );
         }
         if (!@socket_write($this->clientFD[0], $data)) {
-            $this->_sendDebugMessage("Could not write '".$data."' client ".$clientId." (".$this->getLastSocketError($this->clientFD[$clientId]).").");
+            $this->_sendDebugMessage("Could not write '".$data."' client ".getmypid()." (".$this->getLastSocketError($this->clientFD[0]).").");
         }
     }
 
@@ -275,7 +275,7 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
         if (!isset($this->clientFD[0]) || $this->clientFD[0] == null) {
             return $this->raiseError("Client does not exist.");
         }
-        return $this->clientInfo[$clientId];
+        return $this->clientInfo[0];
     }
 
    /**
