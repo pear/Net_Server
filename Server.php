@@ -65,10 +65,10 @@ define('NET_SERVER_ERROR_PCNTL_REQUIRED', 54);
  * See Server/Handler.php for a baseclass that you can
  * use to implement new handlers.
  *
- * @version 0.10 alpha
+ * @version 0.11 alpha
  * @author  Stephan Schmidt <schst@php.net>
  */
-class Net_Server extends PEAR {
+class Net_Server {
 
    /**
     * create a new server
@@ -90,7 +90,7 @@ class Net_Server extends PEAR {
         }
 
         $type       =   ucfirst(strtolower($type));
-        $driverFile =   'Net/Server/Drivers/' . $type . '.php';
+        $driverFile =   'Net/Server/Driver/' . $type . '.php';
         $className  =   'Net_Server_' . $type;
         
         if (!@include_once $driverFile) {

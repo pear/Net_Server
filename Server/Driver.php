@@ -23,7 +23,7 @@
  *
  * @author  Stephan Schmidt <schst@php.net>
  */
-class Net_Server_Driver {
+class Net_Server_Driver extends PEAR {
    /**
     * port to listen
     * @access private
@@ -125,9 +125,6 @@ class Net_Server_Driver {
         
         $this->domain = $domain;
         $this->port   = $port;
-
-        // this is only needed, when server is not run in CLI
-        set_time_limit(0);
     }
 
    /**
@@ -175,12 +172,22 @@ class Net_Server_Driver {
         while($buf = socket_read($this->clientFD[$clientId], $this->readBufferSize)) {
             $data    .=    $buf;
 
-            $endString    =    substr($buf, - strlen($this->readEndCharacter));
-            if ($endString == $this->readEndCharacter) {
-                break;
-            }
             if ($buf == null) {
                 break;
+            }
+
+            if ($this->readEndCharacter != null) {
+                $endString    =    substr($buf, - strlen($this->readEndCharacter));
+                if ($endString == $this->readEndCharacter) {
+                    break;
+                }
+            } else {
+                /**
+                 * readEndCharacter is set to null => autodetect
+                 */
+                if( strlen( $buff ) < $this->readBufferSize ) {
+                    break;
+                }
             }
         }
 

@@ -36,7 +36,6 @@ require_once 'Net/Server/Driver.php';
  *   - onClose
  *   - onReceiveData
  *
- * @version 0.10 alpha
  * @author  Stephan Schmidt <schst@php.net>
  */
 class Net_Server_Fork extends Net_Server_Driver
