@@ -12,10 +12,10 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>0.9.1</version>
+    <version>0.10</version>
     <date></date>
     <license>PHP</license>
-    <state>beta</state>
+    <state>alpha</state>
     <notes>
         added bytes sent/recieved,
         adjusted PHPDoc comments to PEAR CS,

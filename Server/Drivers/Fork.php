@@ -278,6 +278,7 @@ class Net_Server_Fork extends Net_Server
         @socket_close($this->clientFD[0]);
         $this->clientFD[0]    =    NULL;
         unset($this->clientInfo[0]);
+		exit;
     }
 
    /**
