@@ -212,7 +212,7 @@ class Net_Server_Driver extends PEAR {
                 /**
                  * readEndCharacter is set to null => autodetect
                  */
-                if( strlen( $buff ) < $this->readBufferSize ) {
+                if( strlen( $buf ) < $this->readBufferSize ) {
                     break;
                 }
             }
