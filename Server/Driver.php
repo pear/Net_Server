@@ -195,13 +195,14 @@ class Net_Server_Driver extends PEAR {
         $data = '';
     
         //    read data from socket
-        while($buf = socket_read($this->clientFD[$clientId], $this->readBufferSize)) {
-            $data    .=    $buf;
+        while(true) {
+            $buf = socket_read($this->clientFD[$clientId], $this->readBufferSize);
+            $data .= $buf;
 
-            if ($buf == null) {
+            if ((string)$buf === null) {
                 break;
             }
-
+            
             if ($this->readEndCharacter != null) {
                 $endString    =    substr($buf, - strlen($this->readEndCharacter));
                 if ($endString == $this->readEndCharacter) {
@@ -221,7 +222,7 @@ class Net_Server_Driver extends PEAR {
             $this->_sendDebugMessage("Could not read from client ".$clientId." (".$this->getLastSocketError($this->clientFD[$clientId]).").");
             return false;
         }
-        if ($data === '') {
+        if ((string)$data === '') {
             return false;
         }
         return $data;
@@ -301,5 +302,5 @@ class Net_Server_Driver extends PEAR {
         $lastError    =    socket_last_error($fd);
         return 'Msg: ' . socket_strerror($lastError) . ' / Code: '.$lastError;
     }
- }
+}
 ?>
