@@ -133,12 +133,12 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
                     $peer_host    =    "";
                     $peer_port    =    "";
                     socket_getpeername($this->clientFD[0], $peer_host, $peer_port);
-                    $this->clientInfo[0]    =    array(
-                                                        "host"        =>    $peer_host,
-                                                        "port"        =>    $peer_port,
-                                                        "connectOn"   =>    time()
+                    $this->clientInfo    =    array(
+                                                      "host"        =>    $peer_host,
+                                                      "port"        =>    $peer_port,
+                                                      "connectOn"   =>    time()
                                                    );
-                    $this->_sendDebugMessage("New connection from ".$peer_host." on port ".$peer_port);
+                    $this->_sendDebugMessage("New connection from ".$peer_host." on port ".$peer_port.", new pid: ".getmypid());
 
                     if (method_exists($this->callbackObj, "onConnect")) {
                         $this->callbackObj->onConnect(0);
@@ -173,7 +173,7 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
     
             if ($ready === false)
             {
-                $this->_sendDebugMessage("socket_select failed.");
+                $this->_sendDebugMessage("socket_select() failed.");
                 $this->shutdown();
             }
     
@@ -189,7 +189,7 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
                 }
                 else
                 {
-                    $this->_sendDebugMessage("Received ".trim($data)." from ".getmypid());
+                    $this->_sendDebugMessage("Received ".trim($data)." from ".$this->_getDebugInfo());
     
                     if (method_exists($this->callbackObj, "onReceiveData")) {
                         $this->callbackObj->onReceiveData(0, $data);
@@ -244,10 +244,10 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
         }
 
         if ($debugData) {
-            $this->_sendDebugMessage("sending: \"" . $data . "\" to: ".getmypid() );
+            $this->_sendDebugMessage("sending: \"" . $data . "\" to: ".$this->_getDebugInfo() );
         }
         if (!@socket_write($this->clientFD[0], $data)) {
-            $this->_sendDebugMessage("Could not write '".$data."' client ".getmypid()." (".$this->getLastSocketError($this->clientFD[0]).").");
+            $this->_sendDebugMessage("Could not write '".$data."' client ".$this->_getDebugInfo()." (".$this->getLastSocketError($this->clientFD[0]).").");
         }
     }
 
@@ -271,10 +271,10 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
     */
     function getClientInfo()
     {
-        if (!isset($this->clientFD[0]) || $this->clientFD[0] == null) {
+        if (!is_array($this->clientFD)) {
             return $this->raiseError("Client does not exist.");
         }
-        return $this->clientInfo[0];
+        return $this->clientInfo;
     }
 
    /**
@@ -292,12 +292,12 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
             $this->callbackObj->onClose(0);
         }
 
-        $this->_sendDebugMessage("Closed connection from ".$this->clientInfo[0]["host"]." on port ".$this->clientInfo[0]["port"]);
+        $this->_sendDebugMessage("Closed connection from ".$this->_getDebugInfo());
 
         @socket_shutdown($this->clientFD[0], 2);
         @socket_close($this->clientFD[0]);
         $this->clientFD[0]    =    null;
-        unset($this->clientInfo[0]);
+        $this->clientInfo = null;
         exit();
     }
 
@@ -310,6 +310,17 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
     {
         $this->closeConnection();
         exit();
+    }
+
+   /**
+    * get debug information about the process
+    *
+    * @access private
+    * @return string
+    */
+    function _getDebugInfo()
+    {
+        return $this->clientInfo['host'].':'.$this->clientInfo['port'].' (pid: '.getmypid().')';
     }
 }
 ?>
