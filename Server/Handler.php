@@ -37,7 +37,8 @@ class Net_Server_Handler {
 
    /**
     * reference to the server object, used to send data to the client
-    * @var object
+    * @var    object
+	* @access private
     */
     var $_server;
 
@@ -47,7 +48,8 @@ class Net_Server_Handler {
     * This is done automatically when the handler is passed over to the server
     *
     * @access public
-    * @param  object    Net_Server_* object
+    * @param  object Net_Server_Driver   a reference to the driver object, needed to send data
+	*                                    to the clients
     */
     function setServerReference( &$server )
     {
@@ -58,6 +60,9 @@ class Net_Server_Handler {
     * onStart handler
     *
     * This handler is called, when the server starts.
+	*
+	* Implement this method to load configuration files.
+	*
     * Available in:
     * - Net_Server_Sequential
     * - Net_Server_Fork
@@ -72,6 +77,10 @@ class Net_Server_Handler {
     * onShutdown handler
     *
     * This handler is called, when the server is stopped.
+	*
+	* Implement gabage collection in this method, if your server
+	* created some temporary files.
+	*
     * Available in:
     * - Net_Server_Sequential
     *
@@ -84,7 +93,11 @@ class Net_Server_Handler {
    /**
     * onConnect handler
     *
-    * This handler is called, when a new client connects
+    * This handler is called, when a new client connects. It is
+	* called even before the client sent data to the server.
+	*
+	* You could use this method to send a welcome message to the client.
+	*
     * Available in:
     * - Net_Server_Sequential
     * - Net_Server_Fork
@@ -99,7 +112,11 @@ class Net_Server_Handler {
    /**
     * onConnectionRefused handler
     *
-    * This handler is called, when a new client tries to connect but is not allowed to
+    * This handler is called, when a new client tries to connect but is not allowed to.
+	*
+	* This could happen, if max clients is used. This method currently only may be
+	* implemented in Net_Server_Sequential. Will be available in other drivers soon.
+	*
     * Available in:
     * - Net_Server_Sequential
     *
@@ -113,7 +130,10 @@ class Net_Server_Handler {
    /**
     * onClose handler
     *
-    * This handler is called, when a client disconnects from the server
+    * This handler is called, when a client disconnects from the server.
+	*
+	* You could implement some garbage collection in this method.
+	*
     * Available in:
     * - Net_Server_Sequential
     * - Net_Server_Fork
@@ -129,6 +149,7 @@ class Net_Server_Handler {
     * onReceiveData handler
     *
     * This handler is called, when a client sends data to the server
+	*
     * Available in:
     * - Net_Server_Sequential
     * - Net_Server_Fork

@@ -81,17 +81,22 @@ define('NET_SERVER_ERROR_PCNTL_REQUIRED', 54);
 class Net_Server {
 
    /**
-    * create a new server
+    * Create a new server
     *
     * Currently two types of servers are supported:
     * - 'sequential', creates a server where one process handles all request from all clients sequentially
     * - 'fork', creates a server where a new process is forked for each client that connects to the server. This only works on *NIX
     *
+	* This method will either return a server object or a PEAR error if the server
+	* type does not exist.
+	*
     * @access public
     * @static
     * @param  string    $type   type of the server
     * @param  string    $host   hostname
     * @param  integer   $port   port
+	* @return object Net_Server_Driver  server object of the desired type
+	* @throws object PEAR_Error
     */
     function &create($type, $host, $port)
     {

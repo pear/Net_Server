@@ -181,7 +181,7 @@ require_once 'Net/Server/Driver.php';
    /**
     * accept a new connection
     *
-    * @access   public
+    * @access   private
     * @param    resource    &$socket    socket that received the new connection
     * @return   int         $clientID   internal ID of the client
     */
