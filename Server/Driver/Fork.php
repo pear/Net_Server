@@ -295,6 +295,7 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
 
         $this->_sendDebugMessage("Closed connection from ".$this->clientInfo[0]["host"]." on port ".$this->clientInfo[0]["port"]);
 
+        @socket_shutdown($this->clientFD[0], 2);
         @socket_close($this->clientFD[0]);
         $this->clientFD[0]    =    null;
         unset($this->clientInfo[0]);

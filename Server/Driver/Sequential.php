@@ -315,6 +315,7 @@ require_once 'Net/Server/Driver.php';
 
         $this->_sendDebugMessage("Closed connection (".$id.") from ".$this->clientInfo[$id]["host"]." on port ".$this->clientInfo[$id]["port"]);
 
+		@socket_shutdown($this->clientFD[$id], 2);
         @socket_close($this->clientFD[$id]);
         $this->clientFD[$id]    =    NULL;
         unset($this->clientInfo[$id]);
@@ -337,6 +338,7 @@ require_once 'Net/Server/Driver.php';
             $this->closeConnection($i);
         }
 
+        @socket_shutdown($this->initFD, 2);
         @socket_close($this->initFD);
 
         $this->_sendDebugMessage("Shutdown server.");
