@@ -18,12 +18,10 @@
 //
 //    $Id$
 
-require_once 'PEAR.php';
-
 /**
  * Base class for all handlers
  *
- * @version 1.0
+ * @version 0.10
  * @author  Stephan Schmidt <schst@php.net>
  */
 class Net_Server_Handler {

@@ -37,7 +37,7 @@
  *   - onReceiveData
  *   - onShutdown
  *
- * @version 1.0alpha
+ * @version 0.10 alpha
  * @author  Stephan Schmidt <schst@php.net>
  */
  class Net_Server_Sequential extends Net_Server

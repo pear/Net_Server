@@ -45,7 +45,7 @@ require_once 'PEAR.php';
  * See Server/Handler.php for a baseclass that you can
  * use to implement new handlers.
  *
- * @version 1.0alpha
+ * @version 0.10 alpha
  * @author  Stephan Schmidt <schst@php.net>
  */
 class Net_Server extends PEAR {
