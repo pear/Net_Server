@@ -72,6 +72,7 @@ $package->addMaintainer('schst', 'lead', 'Stephan Schmidt', 'schst@php-tools.net
 $package->addMaintainer('lucamariano', 'lead', 'Luca Mariano', 'luca.mariano@email.it');
 
 $package->addDependency('PEAR', '', 'has', 'pkg', false);
+$package->addDependency('PHP_Fork', '', 'has', 'pkg', true);
 $package->addDependency('php', '4.2.0', 'ge', 'php', false);
 $package->addDependency('sockets', '', 'has', 'ext', false);
 $package->addDependency('pcntl', '', 'has', 'ext', true);

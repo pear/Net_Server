@@ -20,7 +20,7 @@
   </maintainers>
   <release>
     <version>0.12.0</version>
-    <date>2004-08-21</date>
+    <date>2004-11-16</date>
     <license>PHP License</license>
     <state>alpha</state>
     <notes>- fixed Bug #2092 (typo in variable name)
@@ -32,6 +32,7 @@
       <dep type="pkg" rel="has" optional="no">PEAR</dep>
       <dep type="ext" rel="has" optional="no">sockets</dep>
       <dep type="ext" rel="has" optional="yes">pcntl</dep>
+      <dep type="pkg" rel="has" optional="yes">PHP_Fork</dep>
     </deps>
     <filelist>
       <dir baseinstalldir="Net" name="/">
@@ -46,7 +47,13 @@
         <file role="php" name="Handler.php"/>
         <dir name="Driver">
          <file role="php" name="Fork.php"/>
+         <file role="php" name="Multiprocess.php"/>
          <file role="php" name="Sequential.php"/>
+         <dir name="Multiprocess">
+          <file role="php" name="MPM-prefork.php"/>
+          <file role="php" name="Processor.php"/>
+          <file role="php" name="remoteConsole.php"/>
+         </dir> <!-- Server/Driver/Multiprocess -->
         </dir> <!-- Server/Driver -->
        </dir> <!-- Server -->
        <file role="php" name="Server.php"/>
@@ -123,7 +130,7 @@ Restructuring:
     </release>
     <release>
       <version>0.12.0</version>
-      <date>2004-08-21</date>
+      <date>2004-11-16</date>
       <license>PHP License</license>
       <state>alpha</state>
       <notes>- fixed Bug #2092 (typo in variable name)
