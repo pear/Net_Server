@@ -13,19 +13,26 @@
   </maintainers>
   <release>
     <version>0.10</version>
-    <date></date>
+    <date>2003-10-31</date>
     <license>PHP</license>
     <state>alpha</state>
     <notes>
-        added bytes sent/recieved,
-        adjusted PHPDoc comments to PEAR CS,
-        adjusted _debug property
+		BC breakage release:
+		Net_Server is now working with drivers
+		and callback handlers inseatd of extending
+		a base class
+		Driver based on pcntl is now included that
+		forks new processes.
     </notes>
     <deps>
       <dep type="php" rel="ge" version="4.2"/>
     </deps>
     <filelist>
       <file role="php" baseinstalldir="Net" name="Server.php"/>
+      <file role="php" baseinstalldir="Net" name="Server/Handler.php"/>
+      <file role="php" baseinstalldir="Net" name="Server/Drivers/Fork.php"/>
+      <file role="php" baseinstalldir="Net" name="Server/Drivers/Sequential.php"/>
+      <file role="doc" baseinstalldir="examples" name="examples/talkback.php"/>
     </filelist>
   </release>
   <changelog>

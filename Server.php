@@ -21,6 +21,16 @@
 require_once 'PEAR.php';
 
 /**
+ * driver file does not exist
+ */
+define('NET_SERVER_ERROR_UNKNOWN_DRIVER', 51);
+
+/**
+ * driver file does not contain class
+ */
+define('NET_SERVER_ERROR_DRIVER_CORRUPT', 52);
+
+/**
  * PHP socket server base class
  *
  * This class must only be used to create a new server using
@@ -188,14 +198,14 @@ class Net_Server extends PEAR {
         $driverFile =   'Net/Server/Drivers/' . $type . '.php';
         $className  =   'Net_Server_' . $type;
         
-        if (!file_exists($driverFile)) {
-            return PEAR::raiseError('Unknown server type');
+        if (!@include_once $driverFile) {
+            return PEAR::raiseError('Unknown server type', NET_SERVER_ERROR_UNKNOWN_DRIVER);
         }
         
         include_once $driverFile;
         
         if (!class_exists($className)) {
-            return PEAR::raiseError('Driver file is corrupt.');
+            return PEAR::raiseError('Driver file is corrupt.', NET_SERVER_ERROR_DRIVER_CORRUPT);
         }
 
         $server = &new $className($host, $port);
