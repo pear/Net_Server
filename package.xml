@@ -19,33 +19,37 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>0.11.3</version>
-    <date>2004-07-02</date>
+    <version>0.11.4</version>
+    <date>2004-07-17</date>
     <license>PHP License</license>
     <state>alpha</state>
-    <notes>- fixed bug with autodetection of connection abort</notes>
+    <notes>- fixed bug #1890 (Server.php needs PEAR.php)
+- fixed notices in Fork.php
+- added missing dependencies</notes>
     <deps>
       <dep type="php" rel="ge" version="4.2.0" optional="no"/>
       <dep type="pkg" rel="has" optional="no">PEAR</dep>
+      <dep type="ext" rel="has" optional="no">sockets</dep>
+      <dep type="ext" rel="has" optional="yes">pcntl</dep>
     </deps>
     <filelist>
       <dir baseinstalldir="Net" name="/">
        <dir name="docs">
         <file role="doc" name="todo.txt"/>
-       </dir> <!-- docs -->
+       </dir>
        <dir name="examples">
         <file role="doc" name="talkback.php"/>
-       </dir> <!-- examples -->
+       </dir>
        <dir name="Server">
         <file role="php" name="Driver.php"/>
         <file role="php" name="Handler.php"/>
         <dir name="Driver">
          <file role="php" name="Fork.php"/>
          <file role="php" name="Sequential.php"/>
-        </dir> <!-- Server/Driver -->
-       </dir> <!-- Server -->
+        </dir>
+       </dir>
        <file role="php" name="Server.php"/>
-      </dir> <!-- / -->
+      </dir>
     </filelist>
   </release>
   <changelog>
@@ -99,6 +103,15 @@ Restructuring:
       <license>PHP License</license>
       <state>alpha</state>
       <notes>- fixed bug with autodetection of connection abort</notes>
+    </release>
+    <release>
+      <version>0.11.4</version>
+      <date>2004-07-17</date>
+      <license>PHP License</license>
+      <state>alpha</state>
+      <notes>- fixed bug #1890 (Server.php needs PEAR.php)
+- fixed notices in Fork.php
+- added missing dependencies</notes>
     </release>
   </changelog>
 </package>

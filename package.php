@@ -18,7 +18,7 @@ require_once 'PEAR/PackageFileManager.php';
 /**
  * current version
  */
-$version = '0.11.3';
+$version = '0.11.4';
 
 /**
  * current state
@@ -29,7 +29,9 @@ $state = 'alpha';
  * release notes
  */
 $notes = <<<EOT
-- fixed bug with autodetection of connection abort
+- fixed bug #1890 (Server.php needs PEAR.php)
+- fixed notices in Fork.php
+- added missing dependencies
 EOT;
 
 /**
@@ -70,6 +72,8 @@ $package->addMaintainer('lucamariano', 'lead', 'Luca Mariano', 'luca.mariano@ema
 
 $package->addDependency('PEAR', '', 'has', 'pkg', false);
 $package->addDependency('php', '4.2.0', 'ge', 'php', false);
+$package->addDependency('sockets', '', 'has', 'ext', false);
+$package->addDependency('pcntl', '', 'has', 'ext', true);
 
 if (isset($_GET['make']) || (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] == 'make')) {
     $result = $package->writePackageFile();
