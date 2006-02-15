@@ -80,7 +80,7 @@ require_once 'Net/Server/Driver.php';
     */
     function start()
     {
-        $this->initFD    =    @socket_create(AF_INET, SOCK_STREAM, 0);
+        $this->initFD    =    @socket_create($this->protocol, SOCK_STREAM, 0);
         if (!$this->initFD) {
             return $this->raiseError("Could not create socket.");
         }

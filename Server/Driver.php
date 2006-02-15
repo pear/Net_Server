@@ -57,6 +57,15 @@ class Net_Server_Driver extends PEAR {
     var $domain = "localhost";
 
    /**
+    * The connection protocol:
+    * AF_INET, AF_INET6, AF_UNIX
+    *
+    * @access private
+    * @var integer
+    */
+    var $protocol = AF_INET;
+
+   /**
     * all file descriptors are stored here
     * @access private
     * @var    array    $clientFD
@@ -136,14 +145,16 @@ class Net_Server_Driver extends PEAR {
     * @access   private
     * @param    string   $domain      domain to bind to
     * @param    integer  $port        port to listen to
+    * @param    integer  $protocol    protocol type: AF_INET (default), AF_INET6, AF_UNIX
     * @see      Net_Server::create()
     */
-    function Net_Server_Driver($domain = "localhost", $port = 10000)
+    function Net_Server_Driver($domain = "localhost", $port = 10000, $protocol = AF_INET)
     {
         $this->PEAR();
 
-        $this->domain = $domain;
-        $this->port   = $port;
+        $this->domain   = $domain;
+        $this->port     = $port;
+        $this->protocol = $protocol;
     }
 
    /**

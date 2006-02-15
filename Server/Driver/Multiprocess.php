@@ -101,7 +101,7 @@ class Net_Server_Multiprocess extends Net_Server_Driver {
             die ('Needs pcntl extension to fork processes.');
         }
 
-        $this->initFD = @socket_create(AF_INET, SOCK_STREAM, 0);
+        $this->initFD = @socket_create($this->protocol, SOCK_STREAM, 0);
         if (!$this->initFD) {
             die ("Could not create socket.");
         }

@@ -82,7 +82,7 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
             return $this->raiseError('Needs pcntl extension to fork processes.', NET_SERVER_ERROR_PCNTL_REQUIRED);
         }
     
-        $this->initFD    =    @socket_create(AF_INET, SOCK_STREAM, 0);
+        $this->initFD    =    @socket_create($this->protocol, SOCK_STREAM, 0);
         if (!$this->initFD) {
             return $this->raiseError("Could not create socket.");
         }
