@@ -151,7 +151,7 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
                 else {
                     // the parent process does not have to do anything
                 }
-                
+
             }
         }
     }
@@ -159,46 +159,44 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
    /**
     * service the current request
     *
-    *
-    *
     */
     function serviceRequest()
     {
         while( true )
         {
             $readFDs = array( $this->clientFD[0] );
-    
+
             //    block and wait for data
             $ready    =    @socket_select($readFDs, $this->null, $this->null, null);
-    
-            if ($ready === false)
+
+            if ($ready === false && socket_last_error($this->clientFD[0]) !== 0)
             {
-                $this->_sendDebugMessage("socket_select() failed.");
+                $this->_sendDebugMessage('socket_select() failed.');
                 $this->shutdown();
             }
-    
-            if (in_array($this->clientFD[0], $readFDs))
+
+            if (in_array($this->clientFD[0], $readFDs) && (!$ready===false))
             {
                 $data    =    $this->readFromSocket();
-    
+
                 // empty data => connection was closed
                 if ($data === false)
                 {
-                    $this->_sendDebugMessage("Connection closed by peer");
+                    $this->_sendDebugMessage('Connection closed by peer');
                     $this->closeConnection();
                 }
                 else
                 {
-                    $this->_sendDebugMessage("Received ".trim($data)." from ".$this->_getDebugInfo());
-    
-                    if (method_exists($this->callbackObj, "onReceiveData")) {
+                    $this->_sendDebugMessage('Received ' . trim($data) . ' from ' . $this->_getDebugInfo());
+
+                    if (method_exists($this->callbackObj, 'onReceiveData')) {
                         $this->callbackObj->onReceiveData(0, $data);
                     }
                 }
             }
         }
     }
-    
+
    /**
     * check, whether a client is still connected
     *
