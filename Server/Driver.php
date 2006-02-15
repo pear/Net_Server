@@ -30,7 +30,7 @@
  * uses PEAR's error handling and the destructors
  */
 require_once 'PEAR.php';
- 
+
 /**
  * Base class for all drivers
  *
@@ -76,14 +76,14 @@ class Net_Server_Driver extends PEAR {
     * @var    integer    $readBufferSize
     */
     var $readBufferSize = 128;
-    
+
    /**
     * end character for socket_read
     * @access private
     * @var    integer    $readEndCharacter
     */
     var $readEndCharacter = "\n";
-    
+
    /**
     * maximum of backlog in queue
     * @access private
@@ -97,7 +97,7 @@ class Net_Server_Driver extends PEAR {
     * @var    boolean    $_debug
     */
     var $_debug = true;
-    
+
    /**
     * debug mode, normally only text is needed, as servers should not be run in a browser
     * @access private
@@ -118,7 +118,7 @@ class Net_Server_Driver extends PEAR {
     * @var    array    $null
     */
     var $null = array();
-    
+
    /**
     * needed to store client information
     * @access private
@@ -126,7 +126,7 @@ class Net_Server_Driver extends PEAR {
     */
     var $clientInfo = array();
 
-  /**
+   /**
     * constructor _MUST_ not be called directly
     *
     * Please use the Net_Server::create() method instead
@@ -136,20 +136,20 @@ class Net_Server_Driver extends PEAR {
     * @access   private
     * @param    string   $domain      domain to bind to
     * @param    integer  $port        port to listen to
-	* @see      Net_Server::create()
+    * @see      Net_Server::create()
     */
     function Net_Server_Driver($domain = "localhost", $port = 10000)
     {
         $this->PEAR();
-        
+
         $this->domain = $domain;
         $this->port   = $port;
     }
 
    /**
     * destructor
-	*
-	* Will shutdown the server if the script is abborted.
+    *
+    * Will shutdown the server if the script is abborted.
     *
     * @access   private
     */
@@ -161,11 +161,11 @@ class Net_Server_Driver extends PEAR {
    /**
     * Set debug mode
     *
-	* Debug information can either be written
-	* to a logfile or standard out (= the console).
-	*
-	* To disable debugging, pass false as first parameter.
-	*
+    * Debug information can either be written
+    * to a logfile or standard out (= the console).
+    *
+    * To disable debugging, pass false as first parameter.
+    *
     * @access   public
     * @param    mixed    $debug   [text|html|false]
     * @param    string   $dest    destination of debug message (stdout to output or filename if log should be written)
@@ -176,7 +176,7 @@ class Net_Server_Driver extends PEAR {
             $this->_debug = false;
             return true;
         }
-        
+
         $this->_debug     = true;
         $this->_debugMode = $debug;
         $this->_debugDest = $dest;
@@ -193,15 +193,15 @@ class Net_Server_Driver extends PEAR {
     {
         //    start with empty string
         $data = '';
-    
+
         //    read data from socket
         while (true) {
             $buf = socket_read($this->clientFD[$clientId], $this->readBufferSize);
             $data .= $buf;
 
             if ($this->readEndCharacter != null) {
-                $endString    =    substr($buf, - strlen($this->readEndCharacter));
-                if ($endString == $this->readEndCharacter) {
+                $endString    =    substr($data, - strlen($this->readEndCharacter));
+                if ($endString == $this->readEndCharacter || strlen($buf) == 0) {
                     break;
                 }
             } else {
@@ -226,14 +226,14 @@ class Net_Server_Driver extends PEAR {
 
    /**
     * send a debug message
-	*
-	* Debug messages will be either sent to standard out
-	* or written to a logfile, depending on debug settings.
+    *
+    * Debug messages will be either sent to standard out
+    * or written to a logfile, depending on debug settings.
     *
     * @access public
     * @param  string    $msg    message to debug
-	* @see    setDebugMode()
-	* @todo   remove underscore from method name as the method now is public.
+    * @see    setDebugMode()
+    * @todo   remove underscore from method name as the method now is public.
     */
     function _sendDebugMessage($msg)
     {
@@ -242,7 +242,7 @@ class Net_Server_Driver extends PEAR {
         }
 
         $msg    =    date("Y-m-d H:i:s", time()) . " " . $msg;    
-            
+
         switch($this->_debugMode) {
             case    "text":
                 $msg    =    $msg."\n";
@@ -257,24 +257,24 @@ class Net_Server_Driver extends PEAR {
             flush();
             return true;
         }
-        
+
         error_log($msg, 3, $this->_debugDest);
         return true;
     }
 
    /**
     * register a callback object
-	*
-	* The callback object is the actual server,
-	* that contains the logic to process the events
-	* triggered by the driver class.
-	*
-	* The best way to create a callback object is to
-	* extend the Net_Server_Handler class.
+    *
+    * The callback object is the actual server,
+    * that contains the logic to process the events
+    * triggered by the driver class.
+    *
+    * The best way to create a callback object is to
+    * extend the Net_Server_Handler class.
     *
     * @access public
     * @param  object    $object     callback object
-	* @see    Net_Server_Handler
+    * @see    Net_Server_Handler
     */
     function setCallbackObject(&$object)
     {
