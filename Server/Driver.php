@@ -283,7 +283,7 @@ class Net_Server_Driver extends PEAR {
             $this->callbackObj->setServerReference($this);
         }
     }
-    
+
    /**
     * return string for last socket error
     *
@@ -297,6 +297,28 @@ class Net_Server_Driver extends PEAR {
         }
         $lastError    =    socket_last_error($fd);
         return 'Msg: ' . socket_strerror($lastError) . ' / Code: '.$lastError;
+    }
+
+   /**
+    * Sets the readEndCharacter setting.
+    *
+    * @access public
+    * @param  string $readEndCharacter The new end character
+    */
+    function setEndCharacter($readEndCharacter)
+    {
+        $this->readEndCharacter = $readEndCharacter;
+    }
+
+   /**
+    * Returns the readEndCharacter setting.
+    *
+    * @access public
+    * @return string    The readEndCharacter setting
+    */
+    function getEndCharacter($readEndCharacter)
+    {
+        return $this->readEndCharacter;
     }
 }
 ?>
