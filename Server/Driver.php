@@ -135,6 +135,14 @@ class Net_Server_Driver extends PEAR {
     */
     var $clientInfo = array();
 
+    /**
+     * part of the string that has been read via socket_read
+     * but came after the readEndCharacter char.
+     * @access private
+     * @var string
+     */
+    var $_readLeftOver = null;
+
    /**
     * constructor _MUST_ not be called directly
     *
@@ -154,7 +162,7 @@ class Net_Server_Driver extends PEAR {
 
         $this->domain   = $domain;
         $this->port     = $port;
-        $this->protocol = $protocol;
+        $this->protocol = (int)$protocol;
     }
 
    /**
@@ -207,12 +215,26 @@ class Net_Server_Driver extends PEAR {
 
         //    read data from socket
         while (true) {
-            $buf = socket_read($this->clientFD[$clientId], $this->readBufferSize);
-            $data .= $buf;
+            if ($this->_readLeftOver == null) {
+                $buf = socket_read($this->clientFD[$clientId], $this->readBufferSize);
+            } else {
+                $buf = $this->_readLeftOver;
+                $this->_readLeftOver = null;
+            }
 
             if ($this->readEndCharacter != null) {
-                $endString    =    substr($data, - strlen($this->readEndCharacter));
-                if ($endString == $this->readEndCharacter || strlen($buf) == 0) {
+                if (strlen($buf) == 0) {
+                    break;
+                }
+
+                $posEndChar = strpos($buf, $this->readEndCharacter);
+                if ($posEndChar === false) {
+                    $data .= $buf;
+                } else {
+                    $data .= substr($buf, 0, $posEndChar + 1);
+                    if ($posEndChar < strlen($buf)) {
+                        $this->_readLeftOver = substr($buf, $posEndChar + 1);
+                    }
                     break;
                 }
             } else {
@@ -220,6 +242,7 @@ class Net_Server_Driver extends PEAR {
                  * readEndCharacter is set to null => autodetect
                  */
                 if (strlen($buf) < $this->readBufferSize) {
+                    $data .= $buf;
                     break;
                 }
             }
