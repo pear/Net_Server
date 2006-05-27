@@ -40,6 +40,7 @@ require_once 'PEAR.php';
  * @category    Networking
  * @package     Net_Server
  * @author      Stephan Schmidt <schst@php.net>
+ * @author      Christian Weiske <cweiske@php.net>
  */
 class Net_Server_Driver extends PEAR {
    /**

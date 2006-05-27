@@ -24,6 +24,7 @@
  * @category    Networking
  * @package     Net_Server
  * @author      Stephan Schmidt <schst@php.net>
+ * @author      Christian Weiske <cweiske@php.net>
  */
 
 /**
@@ -112,7 +113,7 @@ require_once 'Net/Server/Driver.php';
     {
         $this->initFD    =    @socket_create($this->protocol, SOCK_STREAM, 0);
         if (!$this->initFD) {
-            return $this->raiseError("Could not create socket.");
+            return $this->raiseError('Could not create socket.');
         }
 
         //    adress may be reused
@@ -122,7 +123,8 @@ require_once 'Net/Server/Driver.php';
         if (!@socket_bind($this->initFD, $this->domain, $this->port)) {
             $error = $this->getLastSocketError($this->initFD);
             @socket_close($this->initFD);
-            return $this->raiseError("Could not bind socket to ".$this->domain." on port ".$this->port." (".$error.").");
+            return $this->raiseError('Could not bind socket to ' . $this->domain
+                . ' on port ' . $this->port . ' (' . $error .').');
         }
 
         //    listen on selected port
@@ -169,7 +171,7 @@ require_once 'Net/Server/Driver.php';
             }
 
             //Idling and no data
-            if ($ready == 0 && $this->idleTimeout !== null && ($idleLast + $this->idleTimeout) < time()) {
+            if ($ready == 0 && $this->idleTimeout !== null && ($idleLast + $this->idleTimeout) <= time()) {
                 $idleLast = time();
                 $this->_sendDebugMessage('Calling onIdle handler.');
                 $this->callbackObj->onIdle();
@@ -237,19 +239,19 @@ require_once 'Net/Server/Driver.php';
             if (!isset($this->clientFD[$i]) || $this->clientFD[$i] == NULL) {
                 $this->clientFD[$i]    =    socket_accept($socket);
                 socket_setopt($this->clientFD[$i], SOL_SOCKET, SO_REUSEADDR, 1);
-                $peer_host    =    "";
-                $peer_port    =    "";
+                $peer_host    =    '';
+                $peer_port    =    '';
                 socket_getpeername($this->clientFD[$i], $peer_host, $peer_port);
                 $this->clientInfo[$i]    =    array(
-                                                    "host"        =>    $peer_host,
-                                                    "port"        =>    $peer_port,
-                                                    "connectOn"    =>    time()
+                                                    'host'        =>    $peer_host,
+                                                    'port'        =>    $peer_port,
+                                                    'connectOn'   =>    time()
                                                );
                 $this->clients++;
 
-                $this->_sendDebugMessage("New connection (".$i.") from ".$peer_host." on port ".$peer_port);
+                $this->_sendDebugMessage('New connection (' . $i . ') from ' . $peer_host . ' on port ' . $peer_port);
 
-                if (method_exists($this->callbackObj, "onConnect")) {
+                if (method_exists($this->callbackObj, 'onConnect')) {
                     $this->callbackObj->onConnect($i);
                 }
                 return $i;
@@ -269,7 +271,7 @@ require_once 'Net/Server/Driver.php';
         if (!isset($this->clientFD[$id])) {
             return false;
         }
-        return true;    
+        return true;
     }
 
    /**
@@ -294,14 +296,15 @@ require_once 'Net/Server/Driver.php';
     function sendData($clientId, $data, $debugData = true)
     {
         if (!isset($this->clientFD[$clientId]) || $this->clientFD[$clientId] == NULL) {
-            return $this->raiseError("Client does not exist.");
+            return $this->raiseError('Client does not exist.');
         }
 
         if ($debugData) {
-            $this->_sendDebugMessage("sending: \"" . $data . "\" to: $clientId" );
+            $this->_sendDebugMessage('sending: "' . $data . '" to: ' . $clientId);
         }
         if (!@socket_write($this->clientFD[$clientId], $data)) {
-            $this->_sendDebugMessage("Could not write '".$data."' client ".$clientId." (".$this->getLastSocketError($this->clientFD[$clientId]).").");
+            $this->_sendDebugMessage('Could not write "' . $data . '" client ' . $clientId
+                . ' (' . $this->getLastSocketError($this->clientFD[$clientId]) . ').');
         }
         return true;
     }
@@ -322,7 +325,8 @@ require_once 'Net/Server/Driver.php';
         for ($i = 0; $i < count($this->clientFD); $i++) {
             if (isset($this->clientFD[$i]) && $this->clientFD[$i] != NULL && !in_array($i, $exclude)) {
                 if (!@socket_write($this->clientFD[$i], $data)) {
-                    $this->_sendDebugMessage("Could not write '".$data."' client ".$i." (".$this->getLastSocketError($this->clientFD[$i]).").");
+                    $this->_sendDebugMessage('Could not write "' . $data . '" client ' . $i
+                        . ' (' . $this->getLastSocketError($this->clientFD[$i]) . ').');
                 }
             }
         }
@@ -338,7 +342,7 @@ require_once 'Net/Server/Driver.php';
     function getClientInfo($clientId)
     {
         if (!isset($this->clientFD[$clientId]) || $this->clientFD[$clientId] == NULL) {
-            return $this->raiseError("Client does not exist.");
+            return $this->raiseError('Client does not exist.');
         }
         return $this->clientInfo[$clientId];
     }
@@ -352,14 +356,15 @@ require_once 'Net/Server/Driver.php';
     function closeConnection($id = 0)
     {
         if (!isset($this->clientFD[$id])) {
-            return $this->raiseError( "Connection already has been closed." );
+            return $this->raiseError('Connection already has been closed.');
         }
 
-        if (method_exists($this->callbackObj, "onClose")) {
+        if (method_exists($this->callbackObj, 'onClose')) {
             $this->callbackObj->onClose($id);
         }
 
-        $this->_sendDebugMessage("Closed connection (".$id.") from ".$this->clientInfo[$id]["host"]." on port ".$this->clientInfo[$id]["port"]);
+        $this->_sendDebugMessage('Closed connection (' . $id . ') from ' . $this->clientInfo[$id]['host']
+             . ' on port ' . $this->clientInfo[$id]['port']);
 
         @socket_shutdown($this->clientFD[$id], 2);
         @socket_close($this->clientFD[$id]);
@@ -375,7 +380,7 @@ require_once 'Net/Server/Driver.php';
     */
     function shutDown()
     {
-        if (method_exists($this->callbackObj, "onShutdown")) {
+        if (method_exists($this->callbackObj, 'onShutdown')) {
             $this->callbackObj->onShutdown();
         }
 
@@ -387,7 +392,7 @@ require_once 'Net/Server/Driver.php';
         @socket_shutdown($this->initFD, 2);
         @socket_close($this->initFD);
 
-        $this->_sendDebugMessage("Shutdown server.");
+        $this->_sendDebugMessage('Shutdown server.');
         exit();
     }
 }

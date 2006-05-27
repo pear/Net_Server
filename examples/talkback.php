@@ -39,7 +39,7 @@ class Net_Server_Handler_Talkback extends Net_Server_Handler
     * @param    integer $clientId
     * @param    string  $data
     */
-    function onReceiveData($clientId = 0, $data = "" )
+    function onReceiveData($clientId = 0, $data = '')
     {
         $this->_server->sendData($clientId, 'You said: ' . $data);
     }
@@ -51,15 +51,14 @@ class Net_Server_Handler_Talkback extends Net_Server_Handler
     */
     function onIdle()
     {
-        echo "I am idling here\n";
         $this->_server->sendData(0, "Please say something!\n");
     }
 }
 
 // create a server that forks new processes
 $server = &Net_Server::create('sequential', 'localhost', 9090);
-//You won't need this in most cases.
-$server->setIdleTimeout(3);
+// you won't need this in most cases.
+$server->setIdleTimeout(10);
 
 if (PEAR::isError($server)) {
     echo $server->getMessage()."\n";
