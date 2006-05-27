@@ -63,6 +63,13 @@ require_once 'Net/Server/Driver.php';
     var $clients = 0;
 
    /**
+    * Seconds until the idle handler is called.
+    * If set to NULL, the idle handler is deactivated.
+    * @var integer
+    */
+    var $idleTimeout = null;
+
+   /**
     * set maximum amount of simultaneous connections
     *
     * @access   public
@@ -71,6 +78,29 @@ require_once 'Net/Server/Driver.php';
     function setMaxClients($maxClients)
     {
         $this->maxClients = $maxClients;
+    }
+
+   /**
+    * Set the number of seconds until the idle handler is called (if defined).
+    * If the timeout is set to NULL (or 0), the timeout is deactivated.
+    *
+    * The idle handler function is "onIdle" and takes no parameters.
+    *
+    * Please take care when using timeout handlers, as the PHP manual states:
+    *  You should always try to use socket_select() without timeout. Your program
+    *  should have nothing to do if there is no data available. Code that depends
+    *  on timeouts is not usually portable and difficult to debug.
+    *
+    * @access public
+    * @param int  $idleTimeout   Number of seconds until the timeout handler 
+    *                               is called.
+    */
+    function setIdleTimeout($idleTimeout = null)
+    {
+        if ($idleTimeout === 0) {
+            $idleTimeout = null;
+        }
+        $this->idleTimeout = $idleTimeout;
     }
 
    /**
@@ -99,20 +129,28 @@ require_once 'Net/Server/Driver.php';
         if (!@socket_listen($this->initFD, $this->maxQueue)) {
             $error = $this->getLastSocketError($this->initFd);
             @socket_close($this->initFD);
-            return $this->raiseError("Could not listen (".$error.").");
+            return $this->raiseError('Could not listen (' . $error . ').');
         }
 
-        $this->_sendDebugMessage("Listening on port ".$this->port.". Server started at ".date("H:i:s", time()));
+        $this->_sendDebugMessage('Listening on port ' . $this->port . '. Server started at ' . date('H:i:s', time()));
 
         //    this allows the shutdown function to check whether the server is already shut down
-        $GLOBALS["_Net_Server_Status"]    =    "running";
+        $GLOBALS['_Net_Server_Status']    =    'running';
 
-        if (method_exists($this->callbackObj, "onStart")) {
+        if (method_exists($this->callbackObj, 'onStart')) {
             $this->callbackObj->onStart();
         }
 
-        while (true)
-        {
+        if ($this->idleTimeout !== null) {
+            if (method_exists($this->callbackObj, 'onIdle')) {
+                $idleLast = time();
+            } else {
+                $this->_sendDebugMessage('Disabling idle handler because onIdle() is not defined in callback handler.');
+                $this->idleTimeout = null;
+            }
+        }
+
+        while (true) {
             $readFDs    =    array();
             array_push($readFDs, $this->initFD);
 
@@ -123,13 +161,21 @@ require_once 'Net/Server/Driver.php';
             }
 
             //    block and wait for data or new connection
-            $ready    =    @socket_select($readFDs, $this->null, $this->null, NULL);
+            $ready    =    @socket_select($readFDs, $this->null, $this->null, $this->idleTimeout);
 
             if ($ready === false) {
-                $this->_sendDebugMessage("socket_select failed.");
+                $this->_sendDebugMessage('socket_select failed.');
                 $this->shutdown();
             }
-            
+
+            //Idling and no data
+            if ($ready == 0 && $this->idleTimeout !== null && ($idleLast + $this->idleTimeout) < time()) {
+                $idleLast = time();
+                $this->_sendDebugMessage('Calling onIdle handler.');
+                $this->callbackObj->onIdle();
+                continue;
+            }
+
             //    check for new connection
             if (in_array($this->initFD, $readFDs)) {
                 $newClient    =    $this->acceptConnection($this->initFD);
@@ -137,9 +183,9 @@ require_once 'Net/Server/Driver.php';
                 //    check for maximum amount of connections
                 if ($this->maxClients > 0) {
                     if ($this->clients > $this->maxClients) {
-                        $this->_sendDebugMessage("Too many connections.");
-                        
-                        if (method_exists($this->callbackObj, "onConnectionRefused")) {
+                        $this->_sendDebugMessage('Too many connections.');
+
+                        if (method_exists($this->callbackObj, 'onConnectionRefused')) {
                             $this->callbackObj->onConnectionRefused($newClient);
                         }
 
@@ -153,23 +199,23 @@ require_once 'Net/Server/Driver.php';
             }
 
             //    check all clients for incoming data
-            for($i = 0; $i < count($this->clientFD); $i++) {
+            for ($i = 0; $i < count($this->clientFD); $i++) {
                 if (!isset($this->clientFD[$i])) {
                     continue;
                 }
 
                 if (in_array($this->clientFD[$i], $readFDs)) {
                     $data    =    $this->readFromSocket($i);
-                    
+
                     //    empty data => connection was closed
                     if ($data === false) {
-                        $this->_sendDebugMessage("Connection closed by peer");
+                        $this->_sendDebugMessage('Connection closed by peer');
                         $this->closeConnection($i);
                     }
                     else {
-                        $this->_sendDebugMessage("Received ".trim($data)." from ".$i);
+                        $this->_sendDebugMessage('Received ' . trim($data) . ' from ' . $i);
 
-                        if (method_exists($this->callbackObj, "onReceiveData")) {
+                        if (method_exists($this->callbackObj, 'onReceiveData')) {
                             $this->callbackObj->onReceiveData($i, $data);
                         }
                     }
@@ -187,7 +233,7 @@ require_once 'Net/Server/Driver.php';
     */
     function acceptConnection(&$socket)
     {
-        for($i = 0 ; $i <= count($this->clientFD); $i++) {
+        for ($i = 0 ; $i <= count($this->clientFD); $i++) {
             if (!isset($this->clientFD[$i]) || $this->clientFD[$i] == NULL) {
                 $this->clientFD[$i]    =    socket_accept($socket);
                 socket_setopt($this->clientFD[$i], SOL_SOCKET, SO_REUSEADDR, 1);
@@ -273,7 +319,7 @@ require_once 'Net/Server/Driver.php';
             $exclude    =    array($exclude);
         }
 
-        for($i = 0; $i < count($this->clientFD); $i++) {
+        for ($i = 0; $i < count($this->clientFD); $i++) {
             if (isset($this->clientFD[$i]) && $this->clientFD[$i] != NULL && !in_array($i, $exclude)) {
                 if (!@socket_write($this->clientFD[$i], $data)) {
                     $this->_sendDebugMessage("Could not write '".$data."' client ".$i." (".$this->getLastSocketError($this->clientFD[$i]).").");
@@ -296,7 +342,7 @@ require_once 'Net/Server/Driver.php';
         }
         return $this->clientInfo[$clientId];
     }
-    
+
    /**
     * close connection to a client
     *
@@ -315,7 +361,7 @@ require_once 'Net/Server/Driver.php';
 
         $this->_sendDebugMessage("Closed connection (".$id.") from ".$this->clientInfo[$id]["host"]." on port ".$this->clientInfo[$id]["port"]);
 
-		@socket_shutdown($this->clientFD[$id], 2);
+        @socket_shutdown($this->clientFD[$id], 2);
         @socket_close($this->clientFD[$id]);
         $this->clientFD[$id]    =    NULL;
         unset($this->clientInfo[$id]);
@@ -334,7 +380,7 @@ require_once 'Net/Server/Driver.php';
         }
 
         $maxFD    =    count($this->clientFD);
-        for($i = 0; $i < $maxFD; $i++) {
+        for ($i = 0; $i < $maxFD; $i++) {
             $this->closeConnection($i);
         }
 
