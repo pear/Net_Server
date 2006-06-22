@@ -17,16 +17,30 @@
       <email>luca.mariano@email.it</email>
       <role>lead</role>
     </maintainer>
+    <maintainer>
+      <user>cweiske</user>
+      <name>Christian Weiske</name>
+      <email>cweiske@php.net</email>
+      <role>lead</role>
+    </maintainer>
   </maintainers>
   <release>
-    <version>0.12.0</version>
-    <date>2004-11-16</date>
+    <version>1.0.0</version>
+    <date>2006-06-22</date>
     <license>PHP License</license>
-    <state>alpha</state>
-    <notes>- fixed Bug #2092 (typo in variable name)
-- fixed bug #2157 (socket_shutdown not called)
-- fixes bug #1945 (removed some variables that have been left over from Net_Server_Driver_Sequential)
-- fixed Request #1946 (improved debug output)</notes>
+    <state>stable</state>
+    <notes>
+     After two years of being alpha, this is the first stable version.
+     Many bugs have been fixed:
+     - Fixing bug #2761
+     - Fixing request #5907: setEndCharacter
+     - Fixing request #4462IPv6 support
+     - Fixing bug: If the server is under full load, it can happen that
+             two data packets are delivered when doing a single
+             socket_read() call. If that happens, the two packets are
+             delivered as one.
+     - Adding onIdle handler
+    </notes>
     <deps>
       <dep type="php" rel="ge" version="4.2.0" optional="no"/>
       <dep type="pkg" rel="has" optional="no">PEAR</dep>
@@ -137,6 +151,24 @@ Restructuring:
 - fixed bug #2157 (socket_shutdown not called)
 - fixes bug #1945 (removed some variables that have been left over from Net_Server_Driver_Sequential)
 - fixed Request #1946 (improved debug output)</notes>
+    </release>
+    <release>
+      <version>1.0.0</version>
+      <date>2006-06-22</date>
+      <license>PHP License</license>
+      <state>stable</state>
+      <notes>
+     After two years of being alpha, this is the first stable version.
+     Many bugs have been fixed:
+     - Fixing bug #2761
+     - Fixing request #5907: setEndCharacter
+     - Fixing request #4462IPv6 support
+     - Fixing bug: If the server is under full load, it can happen that
+             two data packets are delivered when doing a single
+             socket_read() call. If that happens, the two packets are
+             delivered as one.
+     - Adding onIdle handler
+      </notes>
     </release>
   </changelog>
 </package>
