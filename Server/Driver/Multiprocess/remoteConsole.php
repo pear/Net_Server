@@ -41,7 +41,7 @@
  */
 define('REMOTE_CONSOLE_MAXLINE', 1024); // how much to read from a socket at a time
 
-class remoteConsole extends PHP_Fork {
+class Net_Server_Driver_Multiprocess_remoteConsole extends PHP_Fork {
     /**
      * A list of all options avaible to clients; the format is
      * array('choice1'=>'description 1','choice2'=>'description 2')...
@@ -131,7 +131,7 @@ class remoteConsole extends PHP_Fork {
      */
     var $_prompt = ">";
 
-    function remoteConsole ($options, $applicationName, $address = "localhost", $port = "9999", $listenq = 100, $fd_set_size = 5, $acl = array("127.0.0.1"))
+    function Net_Server_Driver_Multiprocess_remoteConsole($options, $applicationName, $address = "localhost", $port = "9999", $listenq = 100, $fd_set_size = 5, $acl = array("127.0.0.1"))
     {
   //      if (!is_array($options))
   //          die ("You should specify some options for your console!\n");

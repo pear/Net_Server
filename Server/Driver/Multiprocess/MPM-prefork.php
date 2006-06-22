@@ -1,13 +1,14 @@
 <?php
 declare (ticks = 1);
-class MPM extends PHP_Fork {
+class Net_Server_Driver_Multiprocess_MPM extends PHP_Fork {
+
     var $_threadPool;
     var $_server;
     var $_numThreads;
     var $_startPool;
     var $_maxIdleTime;
 
-    function MPM(&$pool, &$server)
+    function Net_Server_Driver_Multiprocess_MPM(&$pool, &$server)
     {
         $this->PHP_Fork("Processor-3");
         $this->_server = &$server;
@@ -48,7 +49,7 @@ class MPM extends PHP_Fork {
                 // let's see if there're few threads avaible...
                 print("Starting new thread with id " . $nextIndex . "\n");
 
-                $this->_threadPool[$nextIndex] = &new Net_Server_Thread_Processor($nextIndex, $this->_server);
+                $this->_threadPool[$nextIndex] = &new Net_Server_Driver_Multiprocess_Processor($nextIndex, $this->_server);
                 $this->_threadPool[$nextIndex]->start();
                 print("Started Processor " . $nextIndex . " with PID " . $this->_threadPool[$nextIndex]->getPid() . "\n");
                 sleep(2);

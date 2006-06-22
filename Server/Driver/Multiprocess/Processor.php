@@ -1,9 +1,9 @@
 <?php
 
-class Net_Server_Thread_Processor extends PHP_Fork {
+class Net_Server_Driver_Multiprocess_Processor extends PHP_Fork {
     var $_server;
 
-    function Net_Server_Thread_Processor($id, $server)
+    function Net_Server_Driver_Multiprocess_Processor($id, $server)
     {
         $this->PHP_Fork("Processor-" . $id);
         $this->_server = &$server;
