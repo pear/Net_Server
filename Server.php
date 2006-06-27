@@ -112,11 +112,11 @@ class Net_Server {
         $type       =   ucfirst(strtolower($type));
         $driverFile =   'Net/Server/Driver/' . $type . '.php';
         $className  =   'Net_Server_Driver_' . $type;
-        
-        if (!@include_once $driverFile) {
+
+        if (!include_once $driverFile) {
             return PEAR::raiseError('Unknown server type', NET_SERVER_ERROR_UNKNOWN_DRIVER);
         }
-        
+
         if (!class_exists($className)) {
             return PEAR::raiseError('Driver file is corrupt.', NET_SERVER_ERROR_DRIVER_CORRUPT);
         }

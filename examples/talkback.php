@@ -69,6 +69,8 @@ $handler = &new Net_Server_Handler_Talkback();
 // hand over the object that handles server events
 $server->setCallbackObject($handler);
 $server->readBufferSize = 1;
+$server->readEndCharacter = "\n";
+$server->_debug = true;
 
 // start the server
 $server->start();

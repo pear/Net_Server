@@ -137,8 +137,14 @@ class Net_Server_Driver extends PEAR {
     var $clientInfo = array();
 
     /**
-     * part of the string that has been read via socket_read
+     * Part of the string that has been read via socket_read
      * but came after the readEndCharacter char.
+     *
+     * This can happen if the server gets hammered with > 100 requests
+     * per second - multiple requests are delivered on the same connection
+     * then. We need to supply a way to split the single packages, and
+     * _readLeftOver is the solution.
+     *
      * @access private
      * @var string
      */
@@ -214,6 +220,13 @@ class Net_Server_Driver extends PEAR {
         //    start with empty string
         $data = '';
 
+        // There are problems when readEndCharacter is longer than
+        // readBufferSize - endings won't be detected.
+        $lookInData = strlen($this->readEndCharacter) > $this->readBufferSize;
+        if ($lookInData) {
+            $extraDataLength = strlen($this->readEndCharacter) - $this->readBufferSize;
+        }
+
         //    read data from socket
         while (true) {
             if ($this->_readLeftOver == null) {
@@ -228,13 +241,18 @@ class Net_Server_Driver extends PEAR {
                     break;
                 }
 
-                $posEndChar = strpos($buf, $this->readEndCharacter);
+                if (!$lookInData) {
+                    $posEndChar = strpos($buf, $this->readEndCharacter);
+                } else {
+                    $posEndChar = strpos(substr($data, - $extraDataLength) . $buf, $this->readEndCharacter);
+                }
                 if ($posEndChar === false) {
                     $data .= $buf;
                 } else {
-                    $data .= substr($buf, 0, $posEndChar + 1);
+                    $posEndChar += strlen($this->readEndCharacter);
+                    $data .= substr($buf, 0, $posEndChar);
                     if ($posEndChar < strlen($buf)) {
-                        $this->_readLeftOver = substr($buf, $posEndChar + 1);
+                        $this->_readLeftOver = substr($buf, $posEndChar);
                     }
                     break;
                 }
@@ -278,7 +296,7 @@ class Net_Server_Driver extends PEAR {
 
         $msg    =    date("Y-m-d H:i:s", time()) . " " . $msg;    
 
-        switch($this->_debugMode) {
+        switch ($this->_debugMode) {
             case    "text":
                 $msg    =    $msg."\n";
                 break;
@@ -327,7 +345,7 @@ class Net_Server_Driver extends PEAR {
     */
     function getLastSocketError(&$fd)
     {
-        if(!is_resource($fd)) {
+        if (!is_resource($fd)) {
             return '';
         }
         $lastError    =    socket_last_error($fd);
