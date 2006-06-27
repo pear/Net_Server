@@ -25,21 +25,13 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>1.0.0</version>
-    <date>2006-06-22</date>
+    <version>1.0.1</version>
+    <date>2006-06-27</date>
     <license>PHP License</license>
     <state>stable</state>
     <notes>
-     After two years of being alpha, this is the first stable version.
-     Many bugs have been fixed:
-     - Fixing bug #2761
-     - Fixing request #5907: setEndCharacter
-     - Fixing request #4462IPv6 support
-     - Fixing bug: If the server is under full load, it can happen that
-             two data packets are delivered when doing a single
-             socket_read() call. If that happens, the two packets are
-             delivered as one.
-     - Adding onIdle handler
+     - Fixing bug #8006: readEndCharacter size wasn't taken into account
+       and stopped HTTP_Server functioning
     </notes>
     <deps>
       <dep type="php" rel="ge" version="4.2.0" optional="no"/>
@@ -170,5 +162,17 @@ Restructuring:
      - Adding onIdle handler
       </notes>
     </release>
+
+    <release>
+      <version>1.0.1</version>
+      <date>2006-06-27</date>
+      <license>PHP License</license>
+      <state>stable</state>
+      <notes>
+     - Fixing bug #8006: readEndCharacter size wasn't taken into account
+       and stopped HTTP_Server functioning
+      </notes>
+    </release>
+
   </changelog>
 </package>
