@@ -1,178 +1,308 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
-<package version="1.0">
-  <name>Net_Server</name>
-  <summary>Generic server class</summary>
-  <description>Generic server class based on ext/sockets, used to develop any kind of server.</description>
-  <maintainers>
-    <maintainer>
-      <user>schst</user>
-      <name>Stephan Schmidt</name>
-      <email>schst@php-tools.net</email>
-      <role>lead</role>
-    </maintainer>
-    <maintainer>
-      <user>lucamariano</user>
-      <name>Luca Mariano</name>
-      <email>luca.mariano@email.it</email>
-      <role>lead</role>
-    </maintainer>
-    <maintainer>
-      <user>cweiske</user>
-      <name>Christian Weiske</name>
-      <email>cweiske@php.net</email>
-      <role>lead</role>
-    </maintainer>
-  </maintainers>
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.11" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Net_Server</name>
+ <channel>pear.php.net</channel>
+ <summary>Generic server class</summary>
+ <description>
+  Generic server class based on ext/sockets, used to develop any kind of server.
+ </description>
+ <lead>
+  <name>Stephan Schmidt</name>
+  <user>schst</user>
+  <email>schst@php-tools.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Luca Mariano</name>
+  <user>lucamariano</user>
+  <email>luca.mariano@email.it</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Christian Weiske</name>
+  <user>cweiske</user>
+  <email>cweiske@php.net</email>
+  <active>yes</active>
+ </lead>
+
+ <date>2006-11-16</date>
+ <time>16:14:39</time>
+ <version>
+  <release>1.0.2</release>
+  <api>1.0.2</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP License</license>
+
+ <notes>
+  Using package.xml v2
+ </notes>
+
+ <contents>
+  <dir name="/">
+   <dir name="docs">
+    <file baseinstalldir="Net" name="todo.txt" role="doc" />
+   </dir> <!-- /docs -->
+   <dir name="examples">
+    <file baseinstalldir="Net" name="talkback.php" role="doc" />
+   </dir> <!-- /examples -->
+   <dir name="Server">
+    <dir name="Driver">
+     <dir name="Multiprocess">
+      <file baseinstalldir="Net" name="MPM-prefork.php" role="php" />
+      <file baseinstalldir="Net" name="Processor.php" role="php" />
+      <file baseinstalldir="Net" name="remoteConsole.php" role="php" />
+     </dir> <!-- /Server/Driver/Multiprocess -->
+     <file baseinstalldir="Net" name="Fork.php" role="php" />
+     <file baseinstalldir="Net" name="Multiprocess.php" role="php" />
+     <file baseinstalldir="Net" name="Sequential.php" role="php" />
+    </dir> <!-- /Server/Driver -->
+    <file baseinstalldir="Net" name="Driver.php" role="php" />
+    <file baseinstalldir="Net" name="Handler.php" role="php" />
+   </dir> <!-- /Server -->
+   <file baseinstalldir="Net" name="Server.php" role="php" />
+  </dir> <!-- / -->
+ </contents>
+
+ <dependencies>
+  <required>
+   <php>
+    <min>4.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+   <package>
+    <name>PEAR</name>
+    <channel>pear.php.net</channel>
+   </package>
+   <extension>
+    <name>sockets</name>
+   </extension>
+  </required>
+  <optional>
+   <package>
+    <name>PHP_Fork</name>
+    <channel>pear.php.net</channel>
+   </package>
+   <extension>
+    <name>pcntl</name>
+   </extension>
+  </optional>
+ </dependencies>
+ <phprelease />
+
+ <changelog>
   <release>
-    <version>1.0.1</version>
-    <date>2006-06-27</date>
-    <license>PHP License</license>
-    <state>stable</state>
-    <notes>
-     - Fixing bug #8006: readEndCharacter size wasn't taken into account
-       and stopped HTTP_Server functioning
-    </notes>
-    <deps>
-      <dep type="php" rel="ge" version="4.2.0" optional="no"/>
-      <dep type="pkg" rel="has" optional="no">PEAR</dep>
-      <dep type="ext" rel="has" optional="no">sockets</dep>
-      <dep type="ext" rel="has" optional="yes">pcntl</dep>
-      <dep type="pkg" rel="has" optional="yes">PHP_Fork</dep>
-    </deps>
-    <filelist>
-      <dir baseinstalldir="Net" name="/">
-       <dir name="docs">
-        <file role="doc" name="todo.txt"/>
-       </dir> <!-- docs -->
-       <dir name="examples">
-        <file role="doc" name="talkback.php"/>
-       </dir> <!-- examples -->
-       <dir name="Server">
-        <file role="php" name="Driver.php"/>
-        <file role="php" name="Handler.php"/>
-        <dir name="Driver">
-         <file role="php" name="Fork.php"/>
-         <file role="php" name="Multiprocess.php"/>
-         <file role="php" name="Sequential.php"/>
-         <dir name="Multiprocess">
-          <file role="php" name="MPM-prefork.php"/>
-          <file role="php" name="Processor.php"/>
-          <file role="php" name="remoteConsole.php"/>
-         </dir> <!-- Server/Driver/Multiprocess -->
-        </dir> <!-- Server/Driver -->
-       </dir> <!-- Server -->
-       <file role="php" name="Server.php"/>
-      </dir> <!-- / -->
-    </filelist>
+   <version>
+    <release>1.0.2</release>
+    <api>1.0.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2006-11-16</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>
+    Using package.xml v2
+   </notes>
   </release>
-  <changelog>
-    <release>
-      <version>0.9</version>
-      <date>2002-07-21</date>
-      <state>beta</state>
-      <notes>pearified version of patServer v1.0.1</notes>
-    </release>
-    <release>
-      <version>0.10</version>
-      <date>2003-10-31</date>
-      <license>PHP</license>
-      <state>alpha</state>
-      <notes>BC breakage release:
+
+  <release>
+   <version>
+    <release>0.9</release>
+    <api>0.9</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2002-07-21</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>pearified version of patServer v1.0.1
+   </notes>
+  </release>
+
+  <release>
+   <version>
+    <release>0.10</release>
+    <api>0.10</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2003-10-31</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>BC breakage release:
 Net_Server is now working with drivers
 and callback handlers inseatd of extending
 a base class
 Driver based on pcntl is now included that
-forks new processes.</notes>
-    </release>
-    <release>
-      <version>0.11</version>
-      <date>2004-01-02</date>
-      <license>PHP License</license>
-      <state>alpha</state>
-      <notes>Added auto-detect for clients that use no readEndCharacter
+forks new processes.
+   </notes>
+  </release>
+
+  <release>
+   <version>
+    <release>0.11</release>
+    <api>0.11</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2004-01-02</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>Added auto-detect for clients that use no readEndCharacter
 Restructuring:
 * added driver base class
-* moved code from Net_Server to Net_Server_Driver</notes>
-    </release>
-    <release>
-      <version>0.11.2</version>
-      <date>2004-07-02</date>
-      <license>PHP License</license>
-      <state>alpha</state>
-      <notes>- fixed bug #1244 (check for required extensions),
+* moved code from Net_Server to Net_Server_Driver
+   </notes>
+  </release>
+
+  <release>
+   <version>
+    <release>0.11.2</release>
+    <api>0.11.2</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2004-07-02</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>- fixed bug #1244 (check for required extensions),
 - fixed bug #1429 (fails on reading a 0 character),
-- fixed some coding style issues</notes>
-    </release>
-    <release>
-      <version>0.11.2pl1</version>
-      <date>2004-07-02</date>
-      <license>PHP License</license>
-      <state>alpha</state>
-      <notes>- fixed bug with autodetection of connection abort</notes>
-    </release>
-    <release>
-      <version>0.11.3</version>
-      <date>2004-07-02</date>
-      <license>PHP License</license>
-      <state>alpha</state>
-      <notes>- fixed bug with autodetection of connection abort</notes>
-    </release>
-    <release>
-      <version>0.11.4</version>
-      <date>2004-07-17</date>
-      <license>PHP License</license>
-      <state>alpha</state>
-      <notes>- fixed bug #1890 (Server.php needs PEAR.php)
+- fixed some coding style issues
+   </notes>
+  </release>
+
+  <release>
+   <version>
+    <release>0.11.2pl1</release>
+    <api>0.11.2pl1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2004-07-02</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>- fixed bug with autodetection of connection abort
+   </notes>
+  </release>
+
+  <release>
+   <version>
+    <release>0.11.3</release>
+    <api>0.11.3</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2004-07-02</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>- fixed bug with autodetection of connection abort
+   </notes>
+  </release>
+
+  <release>
+   <version>
+    <release>0.11.4</release>
+    <api>0.11.4</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2004-07-17</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>- fixed bug #1890 (Server.php needs PEAR.php)
 - fixed notices in Fork.php
-- added missing dependencies</notes>
-    </release>
-    <release>
-      <version>0.11.5</version>
-      <date>2004-07-25</date>
-      <license>PHP License</license>
-      <state>alpha</state>
-      <notes>- fixed bug #1972 (script runs in endless loop)</notes>
-    </release>
-    <release>
-      <version>0.12.0</version>
-      <date>2004-11-16</date>
-      <license>PHP License</license>
-      <state>alpha</state>
-      <notes>- fixed Bug #2092 (typo in variable name)
+- added missing dependencies
+   </notes>
+  </release>
+
+  <release>
+   <version>
+    <release>0.11.5</release>
+    <api>0.11.5</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2004-07-25</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>- fixed bug #1972 (script runs in endless loop)
+   </notes>
+  </release>
+
+  <release>
+   <version>
+    <release>0.12.0</release>
+    <api>0.12.0</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2004-11-16</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>- fixed Bug #2092 (typo in variable name)
 - fixed bug #2157 (socket_shutdown not called)
 - fixes bug #1945 (removed some variables that have been left over from Net_Server_Driver_Sequential)
-- fixed Request #1946 (improved debug output)</notes>
-    </release>
-    <release>
-      <version>1.0.0</version>
-      <date>2006-06-22</date>
-      <license>PHP License</license>
-      <state>stable</state>
-      <notes>
-     After two years of being alpha, this is the first stable version.
-     Many bugs have been fixed:
-     - Fixing bug #2761
-     - Fixing request #5907: setEndCharacter
-     - Fixing request #4462IPv6 support
-     - Fixing bug: If the server is under full load, it can happen that
-             two data packets are delivered when doing a single
-             socket_read() call. If that happens, the two packets are
-             delivered as one.
-     - Adding onIdle handler
-      </notes>
-    </release>
+- fixed Request #1946 (improved debug output)
+   </notes>
+  </release>
 
-    <release>
-      <version>1.0.1</version>
-      <date>2006-06-27</date>
-      <license>PHP License</license>
-      <state>stable</state>
-      <notes>
-     - Fixing bug #8006: readEndCharacter size wasn't taken into account
-       and stopped HTTP_Server functioning
-      </notes>
-    </release>
+  <release>
+   <version>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2006-06-22</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>After two years of being alpha, this is the first stable version.
+Many bugs have been fixed:
+- Fixing bug #2761
+- Fixing request #5907: setEndCharacter
+- Fixing request #4462IPv6 support
+- Fixing bug: If the server is under full load, it can happen that
+        two data packets are delivered when doing a single
+        socket_read() call. If that happens, the two packets are
+        delivered as one.
+- Adding onIdle handler
+   </notes>
+  </release>
 
-  </changelog>
+  <release>
+   <version>
+    <release>1.0.1</release>
+    <api>1.0.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2006-06-27</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>- Fixing bug #8006: readEndCharacter size wasn&apos;t taken into account
+  and stopped HTTP_Server functioning
+   </notes>
+  </release>
+ </changelog>
 </package>
