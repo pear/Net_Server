@@ -1,6 +1,8 @@
 <?php
 /**
- * simple example that implements a talkback.
+ * Simple example that implements a talkback.
+ * Start it and connect via telnet to port 9090.
+ * Everything you say will be replied to you.
  *
  * Normally this should be a bit more code and in a separate file
  *
@@ -51,7 +53,12 @@ class Net_Server_Handler_Talkback extends Net_Server_Handler
     */
     function onIdle()
     {
-        $this->_server->sendData(0, "Please say something!\n");
+        for ($nA = 0; $nA < $this->_server->getClients(); $nA++) {
+            $this->_server->sendData(
+                $nA,
+                'Hello #' . $nA . '. Please say something!' . "\n"
+            );
+        }
     }
 }
 

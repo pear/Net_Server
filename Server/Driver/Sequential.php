@@ -93,7 +93,7 @@ require_once 'Net/Server/Driver.php';
     *  on timeouts is not usually portable and difficult to debug.
     *
     * @access public
-    * @param int  $idleTimeout   Number of seconds until the timeout handler 
+    * @param int  $idleTimeout   Number of seconds until the timeout handler
     *                               is called.
     */
     function setIdleTimeout($idleTimeout = null)
@@ -134,10 +134,13 @@ require_once 'Net/Server/Driver.php';
             return $this->raiseError('Could not listen (' . $error . ').');
         }
 
-        $this->_sendDebugMessage('Listening on port ' . $this->port . '. Server started at ' . date('H:i:s', time()));
+        $this->_sendDebugMessage(
+            'Listening on port ' . $this->port
+            . '. Server started at ' . date('H:i:s', time())
+        );
 
-        //    this allows the shutdown function to check whether the server is already shut down
-        $GLOBALS['_Net_Server_Status']    =    'running';
+        //this allows the shutdown function to check whether the server is already shut down
+        $GLOBALS['_Net_Server_Status'] = 'running';
 
         if (method_exists($this->callbackObj, 'onStart')) {
             $this->callbackObj->onStart();
@@ -147,23 +150,26 @@ require_once 'Net/Server/Driver.php';
             if (method_exists($this->callbackObj, 'onIdle')) {
                 $idleLast = time();
             } else {
-                $this->_sendDebugMessage('Disabling idle handler because onIdle() is not defined in callback handler.');
+                $this->_sendDebugMessage(
+                    'Disabling idle handler because onIdle() is not'
+                    . ' defined in callback handler.'
+                );
                 $this->idleTimeout = null;
             }
         }
 
         while (true) {
-            $readFDs    =    array();
+            $readFDs = array();
             array_push($readFDs, $this->initFD);
 
-            //    fetch all clients that are awaiting connections
+            // fetch all clients that are awaiting connections
             for ($i = 0; $i < count($this->clientFD); $i++) {
                 if (isset($this->clientFD[$i]))
                     array_push($readFDs, $this->clientFD[$i]);
             }
 
-            //    block and wait for data or new connection
-            $ready    =    @socket_select($readFDs, $this->null, $this->null, $this->idleTimeout);
+            // block and wait for data or new connection
+            $ready = @socket_select($readFDs, $this->null, $this->null, $this->idleTimeout);
 
             if ($ready === false) {
                 $this->_sendDebugMessage('socket_select failed.');
