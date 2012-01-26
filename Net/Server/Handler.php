@@ -33,131 +33,150 @@
  * @package     Net_Server
  * @author      Stephan Schmidt <schst@php.net>
  */
-class Net_Server_Handler {
+class Net_Server_Handler
+{
 
-   /**
-    * reference to the server object, used to send data to the client
-    * @var    object
-	* @access private
-    */
+    /**
+     * reference to the server object, used to send data to the client
+     * @var    object
+     * @access private
+     */
     var $_server;
 
-   /**
-    * set a reference to the server object
-    * 
-    * This is done automatically when the handler is passed over to the server
-    *
-    * @access public
-    * @param  object Net_Server_Driver   a reference to the driver object, needed to send data
-	*                                    to the clients
-    */
-    function setServerReference( &$server )
+    /**
+     * set a reference to the server object
+     * 
+     * This is done automatically when the handler is passed over to the server
+     *
+     * @param Net_Server_Driver &$server a reference to the driver object,
+     *                                   needed to send data
+     *                                   to the clients
+     *
+     * @access public
+     * @return null
+     */
+    function setServerReference(&$server)
     {
-        $this->_server  =   &$server;
+        $this->_server = &$server;
     }
 
-   /**
-    * onStart handler
-    *
-    * This handler is called, when the server starts.
-	*
-	* Implement this method to load configuration files.
-	*
-    * Available in:
-    * - Net_Server_Sequential
-    * - Net_Server_Fork
-    *
-    * @access public
-    */
+    /**
+     * onStart handler
+     *
+     * This handler is called, when the server starts.
+     *
+     * Implement this method to load configuration files.
+     *
+     * Available in:
+     * - Net_Server_Sequential
+     * - Net_Server_Fork
+     *
+     * @access public
+     * @return null
+     */
     function onStart()
     {
     }
 
-   /**
-    * onShutdown handler
-    *
-    * This handler is called, when the server is stopped.
-	*
-	* Implement gabage collection in this method, if your server
-	* created some temporary files.
-	*
-    * Available in:
-    * - Net_Server_Sequential
-    *
-    * @access public
-    */
+    /**
+     * onShutdown handler
+     *
+     * This handler is called, when the server is stopped.
+     *
+     * Implement gabage collection in this method, if your server
+     * created some temporary files.
+     *
+     * Available in:
+     * - Net_Server_Sequential
+     *
+     * @access public
+     * @return null
+     */
     function onShutdown()
     {
     }
 
-   /**
-    * onConnect handler
-    *
-    * This handler is called, when a new client connects. It is
-	* called even before the client sent data to the server.
-	*
-	* You could use this method to send a welcome message to the client.
-	*
-    * Available in:
-    * - Net_Server_Sequential
-    * - Net_Server_Fork
-    *
-    * @access public
-    * @param  integer   $clientId   unique id of the client, in Net_Server_Fork, this is always 0
-    */
+    /**
+     * onConnect handler
+     *
+     * This handler is called, when a new client connects. It is
+     * called even before the client sent data to the server.
+     *
+     * You could use this method to send a welcome message to the client.
+     *
+     * Available in:
+     * - Net_Server_Sequential
+     * - Net_Server_Fork
+     *
+     * @param integer $clientId unique id of the client, in Net_Server_Fork,
+     *                          this is always 0
+     *
+     * @access public
+     * @return null
+     */
     function onConnect($clientId = 0)
     {
     }
 
-   /**
-    * onConnectionRefused handler
-    *
-    * This handler is called, when a new client tries to connect but is not allowed to.
-	*
-	* This could happen, if max clients is used. This method currently only may be
-	* implemented in Net_Server_Sequential. Will be available in other drivers soon.
-	*
-    * Available in:
-    * - Net_Server_Sequential
-    *
-    * @access public
-    * @param  integer   $clientId   unique id of the client
-    */
+    /**
+     * onConnectionRefused handler
+     *
+     * This handler is called, when a new client tries to connect but is 
+     * not allowed to.
+     *
+     * This could happen, if max clients is used. This method currently 
+     * only may be implemented in Net_Server_Sequential. 
+     * Will be available in other drivers soon.
+     *
+     * Available in:
+     * - Net_Server_Sequential
+     *
+     * @param integer $clientId unique id of the client
+     *
+     * @access public
+     * @return null
+     */
     function onConnectionRefused($clientId = 0)
     {
     }
 
-   /**
-    * onClose handler
-    *
-    * This handler is called, when a client disconnects from the server.
-	*
-	* You could implement some garbage collection in this method.
-	*
-    * Available in:
-    * - Net_Server_Sequential
-    * - Net_Server_Fork
-    *
-    * @access public
-    * @param  integer   $clientId   unique id of the client, in Net_Server_Fork, this is always 0
-    */
+    /**
+     * onClose handler
+     *
+     * This handler is called, when a client disconnects from the server.
+     *
+     * You could implement some garbage collection in this method.
+     *
+     * Available in:
+     * - Net_Server_Sequential
+     * - Net_Server_Fork
+     *
+     * @param integer $clientId unique id of the client, 
+     *                          in Net_Server_Fork, this is always 0
+     *
+     * @access public
+     * @return null
+     */
     function onClose($clientId = 0)
     {
     }
 
-   /**
-    * onReceiveData handler
-    *
-    * This handler is called, when a client sends data to the server
-	*
-    * Available in:
-    * - Net_Server_Sequential
-    * - Net_Server_Fork
-    *
-    * @access public
-    * @param  integer   $clientId   unique id of the client, in Net_Server_Fork, this is always 0
-    * @param  string    $data       data that the client sent
-    */
+    /**
+     * onReceiveData handler
+     *
+     * This handler is called, when a client sends data to the server
+     *
+     * Available in:
+     * - Net_Server_Sequential
+     * - Net_Server_Fork
+     *
+     * @param integer $clientId unique id of the client, 
+     *                          in Net_Server_Fork, this is always 0
+     * @param string  $data     data that the client sent
+     *
+     * @access public
+     * @return null
+     */
     function onReceiveData($clientId = 0, $data = "")
     {
     }
