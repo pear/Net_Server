@@ -64,7 +64,7 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
     * process
     *
     * @access   public
-    * @param    int    $maxClients
+    * @param int    $maxClients
     */
     function setMaxClients($maxClients)
     {
@@ -227,8 +227,8 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
     * send data to a client
     *
     * @access   public
-    * @param    string    $data        data to send
-    * @param    boolean    $debugData    flag to indicate whether data that is written to socket should also be sent as debug message
+    * @param string    $data        data to send
+    * @param boolean    $debugData    flag to indicate whether data that is written to socket should also be sent as debug message
     */
     function sendData($data, $debugData = true)
     {
@@ -253,8 +253,8 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
     * send data to all clients
     *
     * @access   public
-    * @param    string    $data        data to send
-    * @param    array    $exclude    client ids to exclude
+    * @param string    $data        data to send
+    * @param array    $exclude    client ids to exclude
     */
     function broadcastData($data, $exclude = array())
     {
