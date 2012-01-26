@@ -296,7 +296,6 @@ class Net_Server_Driver_Fork extends Net_Server_Driver
         @socket_close($this->clientFD[0]);
         $this->clientFD[0]    =    null;
         $this->clientInfo = null;
-        exit();
     }
 
    /**
