@@ -23,7 +23,7 @@
   <active>yes</active>
  </lead>
  <date>2012-01-26</date>
- <time>10:58:26</time>
+ <time>11:49:04</time>
  <version>
   <release>1.0.3</release>
   <api>1.0.2</api>
@@ -45,11 +45,11 @@ Bug #12743 Bug in Net_Server_Driver::readFromSocket
    <file baseinstalldir="Net" md5sum="30a8202b722269b62a73e91a158dc839" name="docs/todo.txt" role="doc" />
    <file baseinstalldir="Net" md5sum="b9ad3f4ff50ffe5cf0e3cabef5163a51" name="examples/talkback.php" role="doc" />
    <file baseinstalldir="/" md5sum="2f07fcc7399e69076fac7ae674cd4cb5" name="Net/Server.php" role="php" />
-   <file baseinstalldir="/" md5sum="8cdac701df294d5f3bba163c50c109fa" name="Net/Server/Driver.php" role="php" />
-   <file baseinstalldir="/" md5sum="2357a82fb7bff7f7f906f452f83962dd" name="Net/Server/Handler.php" role="php" />
-   <file baseinstalldir="/" md5sum="ce91155380178d5e72d03e27a8515a64" name="Net/Server/Driver/Fork.php" role="php" />
-   <file baseinstalldir="/" md5sum="6eb4a93090e4c52c142f2c80e69fdfb7" name="Net/Server/Driver/Multiprocess.php" role="php" />
-   <file baseinstalldir="/" md5sum="9f9d64596fc7b15359297462a4dd5744" name="Net/Server/Driver/Sequential.php" role="php" />
+   <file baseinstalldir="/" md5sum="084de4c4a65a664518cca4572ffabbfa" name="Net/Server/Driver.php" role="php" />
+   <file baseinstalldir="/" md5sum="ca0f8da3428be2b8e5366d98a7327c6d" name="Net/Server/Handler.php" role="php" />
+   <file baseinstalldir="/" md5sum="2e9b877e99b27999975e995136c59b28" name="Net/Server/Driver/Fork.php" role="php" />
+   <file baseinstalldir="/" md5sum="fde43226a04670503f275255e0b8252a" name="Net/Server/Driver/Multiprocess.php" role="php" />
+   <file baseinstalldir="/" md5sum="a8ec22c1f9c09801d2f711f954e30a6c" name="Net/Server/Driver/Sequential.php" role="php" />
    <file baseinstalldir="/" md5sum="12c0a1ca0d903cde29da59a492e3532d" name="Net/Server/Driver/Multiprocess/MPM-prefork.php" role="php" />
    <file baseinstalldir="/" md5sum="163f24bf3b09de567ec55e6b371de0c8" name="Net/Server/Driver/Multiprocess/Processor.php" role="php" />
    <file baseinstalldir="/" md5sum="6cddaf4f9a15d0687f5a0f2bd3e6da1b" name="Net/Server/Driver/Multiprocess/remoteConsole.php" role="php" />
